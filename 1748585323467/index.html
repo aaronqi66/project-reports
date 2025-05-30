@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需求与解决方案分析 | Analysis Report</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@10/dist/framer-motion.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Noto+Sans+SC:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', 'Noto Sans SC', sans-serif;
+            background-color: #000000;
+            color: #FFFFFF;
+        }
+        .highlight {
+            color: #E31937;
+        }
+        .highlight-bg {
+            background-color: #E31937;
+        }
+        .highlight-border {
+            border-color: #E31937;
+        }
+        .bento-box {
+            background-color: #1A1A1A; /* Slightly lighter than pure black for contrast */
+            border-radius: 1.5rem; /* 24px */
+            padding: 1.5rem; /* 24px */
+            border: 1px solid #333333;
+            transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+        }
+        .bento-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(227, 25, 55, 0.2);
+        }
+        .title-cn {
+            font-family: 'Noto Sans SC', sans-serif;
+            font-weight: 900;
+        }
+        .title-en {
+            font-family: 'Inter', sans-serif;
+            font-size: 0.875rem; /* 14px */
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        .section-title-cn {
+            font-size: 2.25rem; /* 36px */
+        }
+        .section-title-en {
+            font-size: 1rem; /* 16px */
+        }
+        .item-title-cn {
+            font-size: 1.5rem; /* 24px */
+        }
+        .item-text-cn {
+            font-size: 1rem; /* 16px */
+            color: #D1D5DB; /* gray-300 */
+        }
+         /* For opacity gradient on borders (example) */
+        .highlight-border-gradient {
+            border-width: 2px;
+            border-style: solid;
+            border-image: linear-gradient(to bottom right, #E31937, rgba(227, 25, 55, 0.3)) 1;
+        }
+        .icon-large {
+            font-size: 4rem; /* 64px */
+            opacity: 0.1;
+            position: absolute;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            z-index: 0;
+            color: #E31937;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <div class="min-h-screen p-4 md:p-8">
+        <header class="text-center mb-12 md:mb-16">
+            <motion.h1
+                class="title-cn text-5xl md:text-7xl font-extrabold mb-2"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+            >
+                需求与<span class="highlight">解决方案</span>分析
+            </motion.h1>
+            <motion.p
+                class="title-en text-xl md:text-2xl"
+                initial={{ opacity: 0, y: -30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+            >
+                NEEDS & SOLUTION ANALYSIS REPORT
+            </motion.p>
+        </header>
+
+        <!-- Section 1: 项目出发点与关键要素梳理 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+        >
+            <h2 class="title-cn section-title-cn mb-1 highlight">1. 项目出发点</h2>
+            <p class="title-en section-title-en mb-6">PROJECT INCEPTION & KEY ELEMENTS</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <i class="fas fa-lightbulb icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">核心目的 <span class="title-en text-sm">CORE OBJECTIVE</span></h3>
+                    <p class="item-text-cn">评估项目方向是否正确，识别关键角色、变量和潜在盲区。</p>
+                    <p class="item-text-cn mt-4">Evaluate project direction, identify key roles, variables, and potential blind spots.</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <i class="fas fa-crosshairs icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">关键因子 <span class="title-en text-sm">KEY FACTOR</span></h3>
+                    <p class="item-text-cn highlight font-bold text-3xl">测试</p>
+                    <p class="item-text-cn text-xs mt-1">(需明确：需求满足度、技术实现、用户接受度等)</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                     <i class="fas fa-eye-slash icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">输入盲区 <span class="title-en text-sm">INPUT BLIND SPOTS</span></h3>
+                    <p class="item-text-cn highlight font-bold text-3xl">待识别</p>
+                    <p class="item-text-cn text-xs mt-1">(当前输入单一，可能未覆盖关键角色、真实需求或边界条件)</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.5 }}
+                >
+                    <i class="fas fa-user-check icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">用户定义 <span class="title-en text-sm">USER DEFINITION</span></h3>
+                    <p class="item-text-cn">目标用户：<span class="highlight font-semibold">“测试”</span> (需求：“随便返回 10 个字即可”)</p>
+                    <p class="item-text-cn mt-2">使用者与目标用户当前一致，需验证定义是否准确反映真实用户群体。付费者信息暂未提及。</p>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Section 2: 用户角色与需求迫切度分析 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+        >
+            <h2 class="title-cn section-title-cn mb-1 highlight">2. 用户角色与需求</h2>
+            <p class="title-en section-title-en mb-6">USER ROLES & NEED URGENCY</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-1 md:row-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <i class="fas fa-user-astronaut icon-large" style="font-size: 8rem; opacity: 0.05;"></i>
+                    <h3 class="title-cn item-title-cn mb-2">用户画像: 测试 <span class="title-en text-sm">USER PERSONA: TEST</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">群体规模:</strong> 待调研</p>
+                    <p class="item-text-cn"><strong class="highlight">工作方式:</strong> 根据用户提供内容填充</p>
+                    <p class="item-text-cn mt-3"><strong class="highlight">情感动机:</strong> 追求效率 / 完成特定测试任务 (待验证)</p>
+                    <p class="item-text-cn"><strong class="highlight">心理痛点:</strong> 当前方式无法满足此简单直接的需求 (待验证)</p>
+                    <p class="item-text-cn mt-3"><strong class="highlight">核心需求:</strong> <span class="text-2xl highlight font-bold">"随便返回10个字即可"</span></p>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <i class="fas fa-map-signs icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">场景设想 <span class="title-en text-sm">SCENARIO IMAGINATION</span></h3>
+                    <p class="item-text-cn">用户（角色：测试）在进行某项测试活动时，需要一个能够快速、随意地返回十个字符文本串的功能或服务。</p>
+                    <p class="item-text-cn mt-2 italic">“我正在进行一个测试，我需要一些随机的文本数据，不多不少，刚好<span class="highlight font-bold">十个字</span>就行...”</p>
+                    <p class="item-text-cn mt-2 text-xs text-gray-400">(此场景的真实性、具体任务、行为链与决策动因均为待验证假设)</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                    <i class="fas fa-exchange-alt icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">方案对比 <span class="title-en text-sm">SOLUTION COMPARISON</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">当前方案:</strong> "测试，随便返回 10 个字即可"</p>
+                    <p class="item-text-cn"><strong class="highlight">设想方案:</strong> "测试，随便返回 10 个字即可"</p>
+                    <p class="item-text-cn mt-2"><strong class="highlight">潜在优势:</strong> 速度、便捷性 (待明确对比当前方案)</p>
+                    <p class="item-text-cn"><strong class="highlight">潜在劣势:</strong> 若无本质区别或改进不明显，则不具竞争力 (待验证)</p>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Section 3: 市场现状与机会识别 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+        >
+            <h2 class="title-cn section-title-cn mb-1 highlight">3. 市场与机会</h2>
+            <p class="title-en section-title-en mb-6">MARKET & OPPORTUNITY</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-1 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <i class="fas fa-chart-pie icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">市场结构 <span class="title-en text-sm">MARKET STRUCTURE</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">阶段:</strong> 待调研</p>
+                    <p class="item-text-cn"><strong class="highlight">集中度:</strong> 待调研</p>
+                    <p class="item-text-cn"><strong class="highlight">用户成熟度:</strong> 待调研</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                     <i class="fas fa-search-dollar icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">竞品分析 <span class="title-en text-sm">COMPETITOR ANALYSIS</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">直接竞品:</strong> 在线随机文本生成器, 开发工具代码片段 (待调研)</p>
+                    <p class="item-text-cn"><strong class="highlight">间接竞品:</strong> 手动输入, 复制粘贴, 简单脚本 (待调研)</p>
+                    <p class="item-text-cn mt-2"><strong class="highlight">借鉴点:</strong> 用户对文本内容/格式/长度需求，便捷性是否核心竞争力 (待验证)</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-3 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                    <h3 class="title-cn item-title-cn mb-2">市场规模预估 <span class="title-en text-sm">MARKET SIZE ESTIMATION (CNY)</span></h3>
+                    <div id="marketSizeChart" class="w-full h-64 md:h-80"></div>
+                    <p class="item-text-cn text-xs text-center mt-2 text-gray-400">(数据均为“待调研”，图表仅为占位演示)</p>
+                </motion.div>
+                 <motion.div
+                    class="bento-box md:col-span-3 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                    <i class="fas fa-puzzle-piece icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">差异化与机会 <span class="title-en text-sm">DIFFERENTIATION & OPPORTUNITY</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">需求满足直接性:</strong> 极致简化，即时满足“随便返回10个字” (待验证)</p>
+                    <p class="item-text-cn"><strong class="highlight">目标用户聚焦:</strong> 精准服务特定场景“测试”用户 (待验证)</p>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Section 4: 方案结构与验证要点分析 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+        >
+            <h2 class="title-cn section-title-cn mb-1 highlight">4. 方案与验证</h2>
+            <p class="title-en section-title-en mb-6">SOLUTION & VALIDATION POINTS</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                    class="bento-box relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <i class="fas fa-cogs icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">核心功能 <span class="title-en text-sm">CORE FEATURES</span></h3>
+                    <p class="item-text-cn"><strong class="highlight">核心文本返回:</strong> 实现“测试，随便返回 10 个字即可”</p>
+                    <p class="item-text-cn text-sm mt-1">用户价值: 快速获取10字文本，满足直接需求 (待验证)</p>
+                    <p class="item-text-cn mt-2"><strong class="highlight">(可能)配置选项:</strong> 纯数字/字母等 (待验证)</p>
+                     <p class="item-text-cn text-sm mt-1">用户价值: 更精确满足特定场景 (待验证)</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <i class="fas fa-shoe-prints icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">用户行为路径 <span class="title-en text-sm">USER JOURNEY</span></h3>
+                    <ul class="list-none space-y-1">
+                        <li class="item-text-cn"><span class="highlight font-bold">1. 需求产生:</span> 需要10字文本串</li>
+                        <li class="item-text-cn"><span class="highlight font-bold">2. 发现/启动:</span> 打开功能/服务</li>
+                        <li class="item-text-cn"><span class="highlight font-bold">3. 获取结果:</span> 系统返回10字符</li>
+                        <li class="item-text-cn"><span class="highlight font-bold">4. 使用结果:</span> 用于测试目的</li>
+                        <li class="item-text-cn"><span class="highlight font-bold">5. (可能)付费:</span> 完成付费</li>
+                    </ul>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                     <i class="fas fa-clipboard-check icon-large" style="font-size: 8rem; opacity: 0.05;"></i>
+                    <h3 class="title-cn item-title-cn mb-2">核心方案假设 <span class="title-en text-sm">CORE ASSUMPTIONS</span></h3>
+                    <div class="space-y-2">
+                        <p class="item-text-cn border-l-4 highlight-border pl-3"><strong class="highlight">H1 (高):</strong> 用户“测试”核心需求之一是“随便返回 10 个字即可”。</p>
+                        <p class="item-text-cn border-l-4 highlight-border pl-3"><strong class="highlight">H2 (高):</strong> 设想方案能高效便捷满足H1需求。</p>
+                        <p class="item-text-cn border-l-4 border-gray-600 pl-3"><strong class="highlight">H3 (中):</strong> 用户愿为此功能付费。</p>
+                        <p class="item-text-cn border-l-4 border-gray-600 pl-3"><strong class="highlight">H4 (中):</strong> 项目主题与方案具备市场吸引力/差异化。</p>
+                        <p class="item-text-cn border-l-4 highlight-border pl-3"><strong class="highlight">H5 (高):</strong> 用户提供信息准确且可操作。</p>
+                    </div>
+                     <p class="item-text-cn text-xs text-right mt-2 text-gray-400">(H1, H2, H5 为高优先级假设)</p>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Section 5: 风险因素与验证设计 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1 }}
+        >
+            <h2 class="title-cn section-title-cn mb-1 highlight">5. 风险与MVP</h2>
+            <p class="title-en section-title-en mb-6">RISKS & MVP STRATEGY</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-2 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <i class="fas fa-exclamation-triangle icon-large"></i>
+                    <h3 class="title-cn item-title-cn mb-2">最可能失败点 <span class="title-en text-sm">MOST LIKELY FAILURE POINTS</span></h3>
+                    <ul class="list-disc list-inside space-y-1 item-text-cn">
+                        <li>“随便返回 10 个字即可”并非用户真实、痛点或高频需求。</li>
+                        <li>解决方案本身设计、体验或技术实现不佳。</li>
+                        <li>对用户提供信息的理解偏差，导致方向跑偏。</li>
+                        <li>盈利模式不被接受或无法支撑运营。</li>
+                    </ul>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-1 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <div class="text-center">
+                        <p class="title-cn text-8xl highlight font-black">MVP</p>
+                        <p class="title-en mt-1">MINIMUM VIABLE PRODUCT</p>
+                    </div>
+                </motion.div>
+                <motion.div
+                    class="bento-box md:col-span-3 relative"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                     <i class="fas fa-tasks icon-large" style="font-size: 8rem; opacity: 0.05;"></i>
+                    <h3 class="title-cn item-title-cn mb-2">MVP 验证路径策略 <span class="title-en text-sm">MVP VALIDATION PATH</span></h3>
+                    <ol class="list-decimal list-inside space-y-2 item-text-cn">
+                        <li><strong class="highlight">直接测试:</strong> 与需求提出者深度访谈，澄清“测试”含义、场景、痛点。 (1-2天)</li>
+                        <li><strong class="highlight">借用工具/人工服务:</strong> 快速创建原型或人工提供服务，观察用户反应。 (1周)</li>
+                        <li><strong class="highlight">人工服务+价值沟通:</strong> 沟通付费意愿、心理价位、增值服务期望。 (承接上阶段)</li>
+                        <li><strong class="highlight">最小版本开发:</strong> 开发极简产品/页面，小范围推广，观察使用数据。 (2-4周)</li>
+                    </ol>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <footer class="text-center py-8">
+            <p class="text-sm text-gray-500">&copy; 2024 Needs & Solution Analysis. Generated based on provided data.</p>
+        </footer>
+    </div>
+
+    <script>
+        // Framer Motion setup for all motion elements
+        // This script assumes Framer Motion is loaded and motion is globally available.
+        // For simpler integration, we've used inline attributes directly in HTML.
+        // This script block is mainly for ApexCharts or more complex JS interactions if needed.
+
+        // ApexCharts for Market Size Estimation
+        var marketSizeOptions = {
+          series: [{
+            name: '市场估值 (Market Value)',
+            data: [100, 80, 50] // Placeholder data, all "待调研"
+          }],
+          chart: {
+            type: 'bar',
+            height: '100%',
+            foreColor: '#A0A0A0', // Light gray for text
+            toolbar: { show: false }
+          },
+          plotOptions: {
+            bar: {
+              borderRadius: 4,
+              horizontal: false,
+              distributed: true, // Use different colors if more than one series/category
+              dataLabels: {
+                position: 'top',
+              },
+            }
+          },
+          dataLabels: {
+            enabled: true,
+            formatter: function (val) {
+              return val === 0 ? "待调研" : val + " (估)"; // Show "待调研" if value is 0 or specific flag
+            },
+            offsetY: -20,
+            style: {
+              fontSize: '12px',
+              colors: ["#FFFFFF"]
+            }
+          },
+          xaxis: {
+            categories: ['总体市场 (TAM)', '可服务市场 (SAM)', '可获取市场 (SOM)'],
+            labels: {
+              style: {
+                colors: ['#A0A0A0', '#A0A0A0', '#A0A0A0'],
+                fontSize: '12px'
+              }
+            },
+            axisBorder: { show: false },
+            axisTicks: { show: false },
+          },
+          yaxis: {
+            labels: {
+              show: true,
+              formatter: (val) => { return val === 0 ? "" : val }, // Hide 0 on Y axis
+              style: { colors: ['#A0A0A0'] }
+            }
+          },
+          colors: ['#E31937', '#D44D5C', '#C58781'], // Example gradient-like colors for bars
+          fill: {
+            type: 'gradient',
+            gradient: {
+              shade: 'dark',
+              type: "vertical",
+              shadeIntensity: 0.7,
+              gradientToColors: ['#E31937', '#C52233', '#A01A2B'], // Darker shades for gradient
+              inverseColors: false,
+              opacityFrom: 1,
+              opacityTo: 0.7,
+              stops: [0, 100]
+            }
+          },
+          grid: {
+            borderColor: '#333333', // Darker grid lines
+            strokeDashArray: 4
+          },
+          tooltip: {
+            theme: 'dark',
+            y: {
+              formatter: function (val) {
+                return val === 0 ? "待调研" : val + " (估)"
+              }
+            }
+          },
+          noData: {
+            text: '市场规模数据待调研...',
+            align: 'center',
+            verticalAlign: 'middle',
+            offsetX: 0,
+            offsetY: 0,
+            style: {
+              color: "#A0A0A0",
+              fontSize: '14px',
+            }
+          }
+        };
+        
+        // Modify series data to reflect "待调研" better for the chart logic
+        // Using 0 or a very small number to indicate "待调研" visually
+        // The formatter in dataLabels and tooltip will handle displaying "待调研"
+        marketSizeOptions.series[0].data = [0, 0, 0]; // All set to 0 to trigger "待调研" text
+
+        var marketSizeChart = new ApexCharts(document.querySelector("#marketSizeChart"), marketSizeOptions);
+        marketSizeChart.render();
+
+        // Animate on scroll for all elements with motion attributes
+        // Framer Motion's `whileInView` with `viewport={{ once: true }}` handles this.
+        // No extra JS needed for those basic scroll animations if attributes are set in HTML.
+        // If you need more complex sequences or controls, you would use the JS API here.
+        // Example:
+        // const motionDivs = document.querySelectorAll('motion\\.div'); // CSS.escape might be needed for dot
+        // motionDivs.forEach((el, index) => {
+        //    // motion(el, { initial: ..., animate: ... }); // This is more React-like, direct JS API is different for vanilla
+        // });
+        // For pure JS with Framer Motion, typically you'd use it with a framework
+        // or manually trigger animations. The attributes `initial`, `whileInView` are the easiest.
+    </script>
+</body>
+</html>
