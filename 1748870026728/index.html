@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>需求与解决方案分析 - 豪车租赁B2B平台</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/10.16.4/motion.umd.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .highlight {
+            color: #E31937;
+        }
+        .highlight-bg {
+            background-color: #E31937;
+        }
+        .highlight-border {
+            border-color: #E31937;
+        }
+        .bento-box {
+            background-color: #111827; /* Slightly lighter than pure black for boxes */
+            border-radius: 0.75rem; /* 12px */
+            padding: 1.5rem; /* 24px */
+            box-shadow: 0 10px 15px -3px rgba(227, 25, 55, 0.1), 0 4px 6px -2px rgba(227, 25, 55, 0.05);
+            border: 1px solid #27272a; /* Subtle border */
+        }
+        .highlight-text-gradient {
+            background: linear-gradient(to bottom, #E31937, rgba(227, 25, 55, 0.7));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        /* Custom scrollbar for a more modern feel */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #111827;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #E31937;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #c0122a;
+        }
+        .超大数字 {
+            font-size: 4rem; /* 64px */
+            line-height: 1;
+            font-weight: 800; /* extrabold */
+        }
+        .超大文本 {
+            font-size: 2.25rem; /* 36px */
+            line-height: 2.5rem; /* 40px */
+            font-weight: 700; /* bold */
+        }
+        h2 span.english-subtitle, h3 span.english-subtitle {
+            display: block;
+            font-size: 0.875rem; /* 14px */
+            color: #9ca3af; /* gray-400 */
+            font-weight: 400;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div id="app-container" class="container mx-auto px-4 py-8 md:py-16">
+
+        <header class="text-center mb-16 md:mb-24">
+            <motion.h1
+                class="text-4xl md:text-6xl font-extrabold mb-4 highlight"
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7 }}
+            >
+                需求与解决方案分析
+                <span class="block text-2xl md:text-3xl text-gray-300 mt-2">豪车租赁B2B平台 <span class="text-base text-gray-500">Luxury Car Rental B2B Platform</span></span>
+            </motion.h1>
+        </header>
+
+        <!-- 1. 项目出发点与关键要素梳理 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+        >
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 highlight"><i class="fas fa-rocket mr-3"></i>1. 项目出发点与关键要素梳理 <span class="english-subtitle">Project Foundation & Key Elements</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">核心问题 <span class="english-subtitle">Core Question</span></h3>
+                    <p class="text-gray-300 mb-1">项目成败的关键因子？ 供给、需求、链接？</p>
+                    <p class="超大文本 mt-4">链接端<span class="highlight">薄弱</span></p>
+                    <p class="text-gray-400 mt-2 text-sm">豪车租赁老板间车辆互调意愿存在，但电话/微信效率低下。黑名单共享亦属信息链接问题。</p>
+                    <div class="mt-4 flex items-center">
+                        <i class="fas fa-link-slash fa-2x highlight mr-3"></i>
+                        <span class="text-gray-300">Current links: Inefficient</span>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">用户输入盲区 <span class="english-subtitle">User Input Blind Spots</span></h3>
+                    <ul class="list-none space-y-2 text-sm">
+                        <li class="flex items-start"><i class="fas fa-shield-alt mt-1 mr-2 highlight"></i><span class="text-gray-300">保险与责任界定</span></li>
+                        <li class="flex items-start"><i class="fas fa-map-marker-alt mt-1 mr-2 highlight"></i><span class="text-gray-300">地域性限制</span></li>
+                        <li class="flex items-start"><i class="fas fa-gavel mt-1 mr-2 highlight"></i><span class="text-gray-300">监管与合规</span></li>
+                        <li class="flex items-start"><i class="fas fa-car-side mt-1 mr-2 highlight"></i><span class="text-gray-300">车辆标准与品控</span></li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">用户重新定义 <span class="english-subtitle">Redefining Users</span></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                        <div><strong class="text-gray-200">豪车租赁老板:</strong> 使用者 & 主要付费者</div>
+                        <div><strong class="text-gray-200">豪车租车用户:</strong> 间接影响者, 非平台直接付费</div>
+                        <div><strong class="text-gray-200">豪车维保门店:</strong> 潜在使用者 & 付费者</div>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- 2. 用户角色与需求迫切度分析 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+        >
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 highlight"><i class="fas fa-users mr-3"></i>2. 用户角色与需求迫切度 <span class="english-subtitle">User Roles & Urgency</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box lg:col-span-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">主要用户: 豪车租赁老板 <span class="english-subtitle">Primary User: Luxury Car Rental Owner</span></h3>
+                    <p class="text-gray-400 text-sm mb-1">群体规模: 待调研 (全国约 X千-Y万家)</p>
+                    <p class="text-gray-300 mb-2"><strong class="text-gray-100">核心痛点:</strong> 车辆闲置, 订单流失, 调车效率低, 信息不对称, 坏用户损失。</p>
+                    <p class="text-gray-300"><strong class="text-gray-100">情感动机:</strong> 盈利, 减损, 增效, 拓展。</p>
+                    <div class="mt-4 flex space-x-4">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-700 text-red-100"><i class="fas fa-exclamation-circle mr-1"></i> 订单流失</span>
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-red-700 text-red-100"><i class="fas fa-clock mr-1"></i> 效率低下</span>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                     <h3 class="text-xl font-semibold mb-3 highlight">场景: 调车 <span class="english-subtitle">Scenario: Vehicle Sourcing</span></h3>
+                     <p class="text-gray-300 italic">“天天打电话问一圈，太费劲了... 要是有个平台能直接看到空车就好了。”</p>
+                     <i class="fas fa-phone-volume fa-3x highlight-text-gradient absolute bottom-4 right-4 opacity-30"></i>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                     <h3 class="text-xl font-semibold mb-3 highlight">场景: 黑名单 <span class="english-subtitle">Scenario: Blacklist</span></h3>
+                     <p class="text-gray-300 italic">“这种人真是害群之马... 要是有个大家都能查的黑名单就好了。”</p>
+                     <i class="fas fa-user-slash fa-3x highlight-text-gradient absolute bottom-4 right-4 opacity-30"></i>
+                </motion.div>
+
+                 <motion.div
+                    class="bento-box lg:col-span-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">当前 vs. 设想方案 <span class="english-subtitle">Current vs. Envisioned Solution</span></h3>
+                    <div class="grid grid-cols-2 gap-4 text-sm">
+                        <div>
+                            <strong class="text-gray-200 block">同行调车 (当前):</strong> 电话/微信, 熟人圈
+                            <p class="text-gray-400">效率低, 范围小</p>
+                        </div>
+                        <div>
+                            <strong class="text-gray-200 block">同行调车 (设想):</strong> 平台实时查询/预订
+                            <p class="highlight">高效, 透明, 范围广</p>
+                        </div>
+                         <div>
+                            <strong class="text-gray-200 block">规避风险 (当前):</strong> 口头提醒, 小圈子
+                            <p class="text-gray-400">信息滞后, 覆盖窄</p>
+                        </div>
+                        <div>
+                            <strong class="text-gray-200 block">规避风险 (设想):</strong> 平台共享黑名单
+                            <p class="highlight">信息广, 查询便捷</p>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- 3. 市场现状与机会识别 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+        >
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 highlight"><i class="fas fa-chart-line mr-3"></i>3. 市场现状与机会识别 <span class="english-subtitle">Market Status & Opportunity</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <motion.div
+                    class="bento-box text-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <p class="text-gray-400 text-sm mb-1">市场阶段 <span class="block text-xs">Market Stage</span></p>
+                    <p class="超大文本 highlight">初期 / 成长期</p>
+                    <p class="text-xs text-gray-500 mt-1">针对平台化解决方案而言</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box text-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <p class="text-gray-400 text-sm mb-1">集中度 <span class="block text-xs">Concentration</span></p>
+                    <p class="超大文本 highlight">分散</p>
+                     <p class="text-xs text-gray-500 mt-1">中小型公司为主, 地域性强</p>
+                </motion.div>
+                <motion.div
+                    class="bento-box text-center"
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                     <p class="text-gray-400 text-sm mb-1">用户成熟度 <span class="block text-xs">User Maturity</span></p>
+                    <p class="超大文本 highlight">中 / 低</p>
+                     <p class="text-xs text-gray-500 mt-1">对平台化解决方案接受需引导</p>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">参考竞品借鉴点 <span class="english-subtitle">Lessons from Reference Competitors</span></h3>
+                    <div class="space-y-2 text-sm">
+                        <p><strong class="text-gray-200">货拉拉/满帮:</strong> B2B信息匹配, 交易流程, 信用体系。</p>
+                        <p><strong class="text-gray-200">B2B采购平台:</strong> 行业平台运营, 从信息撮合到交易服务。</p>
+                        <p><strong class="text-gray-200">芝麻信用:</strong> 信用评估体系构建, 数据合规。</p>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">结构性机会 <span class="english-subtitle">Structural Opportunity</span></h3>
+                    <p class="text-gray-300">当前豪车租赁行业B2B协作领域缺乏<strong class="highlight">高效、可信的数字化平台</strong>，存在利用技术手段提升行业整体<strong class="highlight">运营效率</strong>和<strong class="highlight">风险控制能力</strong>的真空地带。</p>
+                    <i class="fas fa-search-dollar fa-3x highlight-text-gradient absolute bottom-6 right-6 opacity-20"></i>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">市场规模预估 (示例) <span class="english-subtitle">Market Size Estimation (Example)</span></h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                        <div>
+                            <p class="text-gray-400 text-sm">TAM</p>
+                            <p class="超大数字 highlight-text-gradient">X百亿</p>
+                            <p class="text-xs text-gray-500">中国豪车租赁年营收</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">SAM</p>
+                            <p class="超大数字 highlight-text-gradient">Y亿</p>
+                            <p class="text-xs text-gray-500">平台可触达年服务费</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">SOM</p>
+                            <p class="超大数字 highlight-text-gradient">Z千万</p>
+                            <p class="text-xs text-gray-500">初期3-5年可获取</p>
+                        </div>
+                    </div>
+                     <!-- Placeholder for a chart -->
+                    <div class="mt-6 h-32 bg-gray-800 rounded flex items-center justify-center">
+                        <i class="fas fa-chart-pie fa-2x text-gray-600 mr-2"></i> <span class="text-gray-600">Market Size Chart Placeholder</span>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- 4. 方案结构与验证要点分析 -->
+        <motion.section
+            class="mb-12 md:mb-16"
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+        >
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 highlight"><i class="fas fa-sitemap mr-3"></i>4. 方案结构与验证要点 <span class="english-subtitle">Solution Structure & Validation Points</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <motion.div
+                    class="bento-box md:col-span-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">核心功能组成 <span class="english-subtitle">Core Functional Components</span></h3>
+                    <ol class="list-decimal list-inside space-y-2 text-gray-300">
+                        <li><strong class="text-gray-100">同行车辆查询与调车:</strong> 解决车源不足, 快速匹配。 <span class="text-xs highlight">(提高订单成功率)</span></li>
+                        <li><strong class="text-gray-100">行业黑名单共享:</strong> 识别规避高风险用户。 <span class="text-xs highlight">(降低坏账损失)</span></li>
+                        <li><strong class="text-gray-100">维保门店对接:</strong> 便捷可靠的维保资源。 <span class="text-xs highlight">(降低维保成本)</span></li>
+                        <li><strong class="text-gray-100">用户账户与认证体系:</strong> 确保身份真实, 建立信任。 <span class="text-xs highlight">(保障交易安全)</span></li>
+                    </ol>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">核心方案假设 (Top 3) <span class="english-subtitle">Core Solution Hypotheses (Top 3)</span></h3>
+                     <ul class="list-none space-y-3 text-sm">
+                        <li class="flex items-start"><strong class="highlight mr-2">H1:</strong> <span class="text-gray-300">老板对高效调车有强烈需求。</span></li>
+                        <li class="flex items-start"><strong class="highlight mr-2">H3:</strong> <span class="text-gray-300">老板愿为平台服务付费。</span></li>
+                        <li class="flex items-start"><strong class="highlight mr-2">H4:</strong> <span class="text-gray-300">共享黑名单能降损且老板愿贡献数据。</span></li>
+                    </ul>
+                </motion.div>
+                 <motion.div
+                    class="bento-box"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">用户行为路径 (调车方) <span class="english-subtitle">User Journey (Vehicle Seeker)</span></h3>
+                     <ol class="list-none space-y-1 text-xs text-gray-400">
+                        <li class="flex items-center"><i class="fas fa-search highlight mr-2"></i>需求产生 & 平台搜索</li>
+                        <li class="flex items-center"><i class="fas fa-comments highlight mr-2"></i>沟通确认 & 下单预订</li>
+                        <li class="flex items-center"><i class="fas fa-exchange-alt highlight mr-2"></i>交易执行 (交接/使用)</li>
+                        <li class="flex items-center"><i class="fas fa-user-shield highlight mr-2"></i>风险管理 (查/报黑名单)</li>
+                    </ol>
+                    <i class="fas fa-route fa-3x highlight-text-gradient absolute bottom-4 right-4 opacity-20"></i>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- 5. 风险因素与验证设计 -->
+        <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.5 }}
+        >
+            <h2 class="text-3xl md:text-4xl font-bold mb-8 highlight"><i class="fas fa-exclamation-triangle mr-3"></i>5. 风险因素与验证设计 <span class="english-subtitle">Risk Factors & Validation Design</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-6">
+                 <motion.div
+                    class="bento-box md:col-span-3"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.1 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">最可能失败点 (Top 3) <span class="english-subtitle">Most Likely Failure Points (Top 3)</span></h3>
+                    <ul class="list-none space-y-2 text-gray-300">
+                        <li class="flex items-start"><i class="fas fa-rocket-launch mt-1 mr-2 text-red-700"></i><strong class="text-gray-100">冷启动困难:</strong> 早期用户少, 平台无价值, 难形成网络效应。</li>
+                        <li class="flex items-start"><i class="fas fa-hand-holding-usd mt-1 mr-2 text-red-700"></i><strong class="text-gray-100">用户不愿付费或付费意愿低:</strong> 盈利模式无法跑通。</li>
+                        <li class="flex items-start"><i class="fas fa-balance-scale mt-1 mr-2 text-red-700"></i><strong class="text-gray-100">黑名单信息质量与合规风险:</strong> 公信力受损或法律制裁。</li>
+                    </ul>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-2"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">MVP 验证路径策略 <span class="english-subtitle">MVP Validation Path</span></h3>
+                    <ol class="list-decimal list-inside space-y-1 text-xs text-gray-400">
+                        <li>直接测试 (访谈/问卷)</li>
+                        <li>人工服务 (模拟流程)</li>
+                        <li>借用工具 (表单/Notion)</li>
+                        <li><strong class="text-red-400">最小版本开发 (核心1-2功能)</strong></li>
+                        <li>全量开发 (迭代完善)</li>
+                    </ol>
+                    <div class="mt-3 text-center">
+                        <i class="fas fa-vial fa-2x highlight"></i>
+                        <p class="text-sm highlight font-semibold">MVP Focus</p>
+                        <p class="text-xs text-gray-300">同行调车 & 黑名单共享</p>
+                    </div>
+                </motion.div>
+
+                <motion.div
+                    class="bento-box md:col-span-5"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, delay: 0.3 }}
+                >
+                    <h3 class="text-xl font-semibold mb-3 highlight">核心假设验证任务 (示例) <span class="english-subtitle">Core Hypothesis Validation Tasks (Examples)</span></h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm text-left text-gray-400">
+                            <thead class="text-xs text-gray-300 uppercase bg-gray-700/50">
+                                <tr>
+                                    <th scope="col" class="px-4 py-2">假设编号</th>
+                                    <th scope="col" class="px-4 py-2">内容</th>
+                                    <th scope="col" class="px-4 py-2">验证方式</th>
+                                    <th scope="col" class="px-4 py-2">周期/样本</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-700">
+                                    <td class="px-4 py-2 font-medium text-red-400">H1</td>
+                                    <td class="px-4 py-2">高效调车强需求</td>
+                                    <td class="px-4 py-2">深度访谈, 问卷</td>
+                                    <td class="px-4 py-2">1-2周 / 10-15老板, 50+问卷</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="px-4 py-2 font-medium text-red-400">H3</td>
+                                    <td class="px-4 py-2">付费意愿</td>
+                                    <td class="px-4 py-2">价格敏感度测试, MVP付费试点</td>
+                                    <td class="px-4 py-2">2-4周 / 1-2月MVP</td>
+                                </tr>
+                                <tr class="border-b border-gray-700">
+                                    <td class="px-4 py-2 font-medium text-red-400">H2</td>
+                                    <td class="px-4 py-2">共享实时库存意愿</td>
+                                    <td class="px-4 py-2">访谈, 原型测试, 手动模拟</td>
+                                    <td class="px-4 py-2">2-3周</td>
+                                </tr>
+                                 <tr class="border-b border-gray-700">
+                                    <td class="px-4 py-2 font-medium text-red-400">H4</td>
+                                    <td class="px-4 py-2">黑名单价值与贡献数据意愿</td>
+                                    <td class="px-4 py-2">访谈, 小范围共建试点</td>
+                                    <td class="px-4 py-2">2-4周</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <footer class="text-center mt-16 md:mt-24 py-8 border-t border-gray-800">
+            <p class="text-sm text-gray-500">内部AI备忘录分析报告可视化 <span class="english-subtitle">Internal AI Memo Analysis Report Visualization</span></p>
+            <p class="text-xs text-gray-600 mt-1">&copy; AI Generated Content. For demonstration purposes only.</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // This basic script ensures Framer Motion works with the motion.div elements
+        // No complex JS needed for this layout as animations are handled by Framer Motion's props.
+        // If using interactive charts like Chart.js, initialization would go here.
+    </script>
+</body>
+</html>
