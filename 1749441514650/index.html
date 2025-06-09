@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>有本相册 - 项目审视</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.umd.js"></script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #FFFFFF;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .highlight-red {
+            color: #E31937;
+        }
+        .bg-highlight-red {
+            background-color: #E31937;
+        }
+        .bento-box {
+            background-color: #111111; /* Slightly off-black for boxes */
+            border-radius: 1.5rem; /* 24px */
+            padding: 1.5rem; /* 24px */
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .bento-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(227, 25, 55, 0.2), transparent);
+            transition: left 0.8s ease-in-out;
+            z-index: 0;
+        }
+        .bento-box:hover::before {
+            left: 100%;
+        }
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 0.75rem; /* 12px */
+            text-align: left;
+            font-size: 0.875rem; /* 14px */
+            line-height: 1.25rem; /* 20px */
+        }
+        th {
+            background-color: #1a1a1a;
+            font-weight: 600;
+        }
+        /* Subtler scrollbar for tables if needed */
+        .table-responsive::-webkit-scrollbar {
+            height: 8px;
+        }
+        .table-responsive::-webkit-scrollbar-track {
+            background: #1a1a1a;
+            border-radius: 4px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb {
+            background: #E31937;
+            border-radius: 4px;
+        }
+        .table-responsive::-webkit-scrollbar-thumb:hover {
+            background: #c0142d;
+        }
+        .text-super {
+            font-size: 4rem; /* 64px */
+            line-height: 1;
+            font-weight: 800;
+        }
+        .text-ultra {
+            font-size: 6rem; /* 96px */
+            line-height: 1;
+            font-weight: 800;
+        }
+        .gradient-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+        }
+        .gradient-red-bottom {
+            background: linear-gradient(to top, rgba(227, 25, 55, 0.3) 0%, transparent 50%);
+        }
+        .gradient-red-top-right {
+             background: radial-gradient(circle at top right, rgba(227, 25, 55, 0.25) 0%, transparent 40%);
+        }
+        .icon-accent {
+            font-size: 3rem; /* 48px */
+            opacity: 0.15;
+            position: absolute;
+            right: 1.5rem;
+            bottom: 1.5rem;
+            transition: opacity 0.3s ease;
+        }
+        .bento-box:hover .icon-accent {
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="bg-black text-white selection:bg-highlight-red selection:text-black">
+
+    <div id="app" class="p-4 md:p-8 min-h-screen">
+        <header class="text-center mb-12 md:mb-16">
+            <motion.h1 
+                class="font-extrabold text-4xl sm:text-5xl md:text-6xl lg:text-7xl"
+                initial="{ y: -50, opacity: 0 }"
+                animate="{ y: 0, opacity: 1 }"
+                transition="{ duration: 0.8, ease: 'easeOut' }"
+            >
+                有本<span class="highlight-red">相册</span>
+            </motion.h1>
+            <motion.p 
+                class="text-gray-400 mt-2 text-sm md:text-base"
+                initial="{ y: -30, opacity: 0 }"
+                animate="{ y: 0, opacity: 1 }"
+                transition="{ duration: 0.8, delay: 0.2, ease: 'easeOut' }"
+            >
+                项目脉络审视 & 风险机会识别 <span class="text-xs text-gray-500 uppercase tracking-wider">Project Analysis & Opportunity Identification</span>
+            </motion.p>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
+            
+            <!-- Module 0: Vision & Soul Searching -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-2 xl:col-span-2 relative"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 0</h2>
+                    <p class="text-lg font-semibold mb-3">项目愿景与灵魂拷问 <span class="text-xs text-gray-400 uppercase">Vision & Soul Searching</span></p>
+                    
+                    <h3 class="text-xl font-semibold mt-4 mb-2">0.1 美好作品想象</h3>
+                    <p class="text-sm text-gray-300 leading-relaxed">
+                        一个真正懂你的“家庭AI记忆管家”。它不仅能将家庭成员（尤其是孩子0-12岁成长过程中）的图片、视频、音频、文字等碎片化信息，通过AI叙事引擎自动编织成富有情感、脉络清晰的成长故事和家庭编年史。更能通过持续学习，构建出每个家庭成员（特别是孩子）在特定时期的“数字克隆体雏形”...这份“家庭数字遗产”不仅可以被安全、私密地传承给未来的家人...还能让未来的他们以一种全新的方式与过去的亲人“对话”...它为世界带来的独特改变是：<strong>让家庭记忆不再是散落的珠子，而是串联成有灵魂的项链，真正实现了情感的跨代传承与深度连接，并赋予了个体生命更长远的数字生命力。</strong>
+                    </p>
+                    <div class="gradient-overlay gradient-red-bottom"></div>
+                    <i class="fas fa-brain icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box flex flex-col justify-center items-center text-center"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mb-2">0.2 灵魂拷问</h3>
+                    <p class="text-sm text-gray-400 mb-3">用户推荐关键词 <span class="text-xs uppercase">User Referral Keywords</span></p>
+                    <div class="space-y-2">
+                        <p class="text-super highlight-red">珍藏</p>
+                        <p class="text-2xl font-medium">或 <span class="text-gray-400">OR</span></p>
+                        <p class="text-super highlight-red">传承</p>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-3">(备选: 懂我)</p>
+                    <i class="fas fa-key icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.3 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mb-2">0.3 团队动机</h3>
+                    <p class="text-sm text-gray-400 mb-3">Unique Team Proposition</p>
+                    <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                        <li><strong>信念层面:</strong> 深刻理解“记录”的重要性，技术服务人文关怀，对抗遗忘，连接过去与未来。</li>
+                        <li><strong>优势层面 (待验证):</strong>
+                            <ul class="list-disc list-inside ml-4 text-xs">
+                                <li>AI叙事、隐私计算、UX洞察。</li>
+                                <li>团队即目标用户 (新手父母)。</li>
+                                <li>对“数字遗产”与“数字永生”的哲学思考。</li>
+                            </ul>
+                        </li>
+                    </ul>
+                    <i class="fas fa-users icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+            
+            <!-- Module 1: Starting Point & Key Factors -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-3 xl:col-span-4"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 1</h2>
+                    <p class="text-lg font-semibold mb-3">项目出发点与关键要素梳理 <span class="text-xs text-gray-400 uppercase">Starting Point & Key Factors</span></p>
+                    <div class="table-responsive">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>核心问题</th>
+                                    <th>检查点说明</th>
+                                    <th>基于用户输入的分析 (及待验证假设)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>项目成败的关键因子？</strong></td>
+                                    <td>是供给、需求，还是链接？当前哪个环节最薄弱？</td>
+                                    <td><strong>需求端</strong> 和 <strong>链接端</strong> 都很关键且存在薄弱环节。 <br> <strong>需求端：</strong> “有多少人有记录自己或孩子时光的诉求”。这不仅仅是记录，而是“深度记录、智能整理并愿意为之付费”的诉求强度。<br> <strong>链接端：</strong> AI叙事引擎的效果和易用性。能否真正将“碎片化记录自动生成可传承的「家庭数字遗产」”并让用户觉得惊艳。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>用户输入是否存在盲区？</strong></td>
+                                    <td>是否遗漏了关键角色、或忽略了重要的边界条件？</td>
+                                    <td><strong>关键角色：</strong> <br> *   孩子 (6-12岁)：从被记录对象转变为参与记录者。<br> *   祖辈：内容贡献者或“有限分享”接收者，潜在付费者。<br> <strong>边界条件：</strong> <br> *   数据隐私法规 (GDPR, CCPA, PIPL)。<br> *   AI伦理：“数字克隆体”伦理、数据所有权等。<br> *   内容审核：用户上传内容合规性。</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>用户是否需要重新定义？</strong></td>
+                                    <td>使用者 ≠ 付费者？是否存在多边关系？</td>
+                                    <td><strong>存在多边关系的可能性：</strong> <br> *   使用者：父母，孩子 (成长中)。<br> *   付费者：父母，可能祖辈。<br> *   受益者/影响者：孩子，其他家庭成员。</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </motion.div>
+
+            <!-- Module 2: User Persona & Urgency (Simplified for brevity, more boxes would be ideal) -->
+             <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-2 xl:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 2</h2>
+                    <p class="text-lg font-semibold mb-3">用户角色与需求迫切度分析 <span class="text-xs text-gray-400 uppercase">User Persona & Urgency</span></p>
+                    <h3 class="text-xl font-semibold mt-4 mb-2">2.1 用户画像与链路角色 (摘要)</h3>
+                    <p class="text-sm text-gray-300 mb-2"><strong>新手父母 (0-3岁孩子):</strong> 忙碌，怕错过与遗忘，手机照片堆积如山，整理费力，朋友圈分享顾虑隐私。</p>
+                    <p class="text-sm text-gray-300"><strong>家庭记录者 (3-12岁孩子):</strong> 多年素材更庞大，希望记录体现孩子性格思想，希望记录有更深远意义。</p>
+                    <div class="gradient-overlay gradient-red-top-right"></div>
+                    <i class="fas fa-user-friends icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box md:col-span-1 lg:col-span-1 xl:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mt-4 mb-2">2.2 场景设想还原</h3>
+                    <p class="text-sm text-gray-300 mb-2"><strong>新手妈妈小琳:</strong> "手机照片视频几千上万张...希望能有个工具，帮我把这些珍贵的瞬间自动串起来...最好能方便地分享给爷爷奶奶..."</p>
+                    <p class="text-sm text-gray-300"><strong>二孩爸爸老王:</strong> "希望把两个孩子的成长轨迹都清晰地记录下来...如果AI能帮我把这些素材按主题、按时间线组织好...以后他们自己看...这不就是最好的家庭财富嘛。"</p>
+                    <i class="fas fa-camera-retro icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <!-- Module 3: Market & Opportunity (Example box) -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 3</h2>
+                    <p class="text-lg font-semibold mb-3">市场现状与机会识别 <span class="text-xs text-gray-400 uppercase">Market & Opportunity</span></p>
+                    <h3 class="text-xl font-semibold mt-4 mb-2">3.1 市场结构判断</h3>
+                    <ul class="text-sm text-gray-300 space-y-1">
+                        <li><strong>市场阶段:</strong> 初期 (AI叙事型家庭数字遗产细分市场)</li>
+                        <li><strong>集中度:</strong> 分散 (该细分市场)</li>
+                        <li><strong>用户成熟度:</strong> 中低 (对AI叙事和数字遗产概念)</li>
+                    </ul>
+                    <p class="text-xs text-gray-500 mt-2">需要大量市场教育 <span class="uppercase">Significant Market Education Needed</span></p>
+                    <i class="fas fa-chart-pie icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box flex flex-col justify-center items-center text-center md:col-span-1 lg:col-span-1"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mb-2">品牌心智定位</h3>
+                    <p class="text-sm text-gray-400 mb-3">Brand Perception</p>
+                    <div class="text-ultra highlight-red">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                    <p class="font-bold text-lg mt-2">珍贵<span class="text-gray-400">·</span>智能<span class="text-gray-400">·</span>安心<span class="text-gray-400">·</span>传承<span class="text-gray-400">·</span>温暖</p>
+                    <p class="text-xs text-gray-500 mt-1">Precious, Intelligent, Secure, Legacy, Warm</p>
+                </div>
+            </motion.div>
+
+            <!-- Module 4: Solution & Validation (Example Box) -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-3 xl:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 4</h2>
+                    <p class="text-lg font-semibold mb-3">方案结构与验证要点分析 <span class="text-xs text-gray-400 uppercase">Solution & Validation</span></p>
+                    <h3 class="text-xl font-semibold mt-4 mb-2">4.1 核心功能组成 (摘要)</h3>
+                     <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                        <li>多模态素材智能导入与管理</li>
+                        <li><strong>AI叙事引擎 (核心)</strong></li>
+                        <li>用户指定存储与隐私计算</li>
+                        <li>“家庭数字遗产”构建与传承</li>
+                        <li>“数字克隆体”初步探索 (远景)</li>
+                        <li>有限可控的分享机制</li>
+                    </ul>
+                    <i class="fas fa-cogs icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-3 xl:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mt-4 mb-2">4.3 核心方案假设清单 (Top 3)</h3>
+                     <ol class="list-decimal list-inside text-sm text-gray-300 space-y-1">
+                        <li><strong>H1 (需求假设):</strong> 目标用户对“AI自动生成可传承的家庭数字遗产”有强烈且未被满足的需求。 <span class="text-xs highlight-red">极高</span></li>
+                        <li><strong>H2 (AI价值假设):</strong> AI叙事引擎能生成足够高质量、个性化、富有情感共鸣的内容。 <span class="text-xs highlight-red">极高</span></li>
+                        <li><strong>H3 (付费意愿假设):</strong> 用户愿意为高质量AI叙事服务、数字遗产构建及隐私保障付费。 <span class="text-xs highlight-red">高</span></li>
+                    </ol>
+                    <div class="gradient-overlay gradient-red-top-right"></div>
+                    <i class="fas fa-lightbulb icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+
+            <!-- Module 5: Risk & MVP (Example Box) -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 5</h2>
+                    <p class="text-lg font-semibold mb-3">风险因素与验证设计 <span class="text-xs text-gray-400 uppercase">Risk & MVP Strategy</span></p>
+                    <h3 class="text-xl font-semibold mt-4 mb-2">5.2 最可能失败点 (Top 2)</h3>
+                     <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+                        <li><strong>AI叙事质量无法达到用户的情感预期:</strong> 生成故事生硬、模板化，无法带来“惊喜”和“懂我”的感觉。 <span class="text-xs highlight-red">极高风险</span></li>
+                        <li><strong>核心需求强度不足或伪需求:</strong> 用户口头认同，实际行动意愿低，满足于现有免费/低成本方案。 <span class="text-xs highlight-red">极高风险</span></li>
+                    </ul>
+                    <i class="fas fa-exclamation-triangle icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box md:col-span-1 lg:col-span-1 xl:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mt-4 mb-2">5.3 MVP 验证路径策略 (摘要)</h3>
+                    <ol class="list-decimal list-inside text-sm text-gray-300 space-y-1">
+                        <li><strong>直接测试 (无需产品):</strong> 深度用户访谈, 概念验证。</li>
+                        <li><strong>人工服务 (“Wizard of Oz”):</strong> 人工扮演AI生成故事。</li>
+                        <li><strong>借用工具 (快速原型):</strong> 用现有工具搭建Demo, Landing Page预购。</li>
+                        <li><strong>最小版本开发:</strong> 1–2个核心功能 (素材上传, 规则化故事生成)。</li>
+                    </ol>
+                    <i class="fas fa-rocket icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <!-- Module 6: Strategic Judgment & Next Step -->
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-2"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.1 }"
+            >
+                <div class="content-wrapper">
+                    <h2 class="text-2xl font-bold mb-1 highlight-red">模块 6</h2>
+                    <p class="text-lg font-semibold mb-3">战略判断与下一步 <span class="text-xs text-gray-400 uppercase">Strategic Judgment & Next Step</span></p>
+                    <h3 class="text-xl font-semibold mt-4 mb-2">6.1 综合评估</h3>
+                    <p class="text-sm text-gray-300 mb-1"><strong>最大机会:</strong> 切入强情感需求, AI技术赋能差异化, 隐私痛点突破, “家庭数字遗产”市场蓝海。</p>
+                    <p class="text-sm text-gray-300"><strong>最致命风险:</strong> AI叙事能力不达预期, 真实需求强度与付费意愿不足, 用户持续使用动力和内容积累不足。</p>
+                    <i class="fas fa-balance-scale icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+
+            <motion.div 
+                class="bento-box flex flex-col justify-center items-center text-center"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.2 }"
+            >
+                <div class="content-wrapper">
+                    <h3 class="text-xl font-semibold mb-2">6.2 建议</h3>
+                    <p class="text-sm text-gray-400 mb-3">Go / No-Go</p>
+                    <p class="text-super highlight-red">Verify</p>
+                    <p class="text-lg font-medium">谨慎验证</p>
+                    <p class="text-xs text-gray-500 mt-1">核心价值高度依赖AI叙事与用户需求，关键假设未验证</p>
+                    <i class="fas fa-traffic-light icon-accent highlight-red"></i>
+                </div>
+            </motion.div>
+            
+            <motion.div 
+                class="bento-box md:col-span-2 lg:col-span-3 xl:col-span-4"
+                initial="{ opacity: 0, y: 20 }"
+                whileInView="{ opacity: 1, y: 0 }"
+                viewport="{ once: true, amount: 0.2 }"
+                transition="{ duration: 0.5, delay: 0.3 }"
+            >
+                <div class="content-wrapper">
+                     <h3 class="text-xl font-semibold mt-4 mb-2">6.3 下一步行动计划 (未来两周)</h3>
+                     <p class="text-sm text-gray-400 mb-3">Next 2 Weeks Action Plan</p>
+                     <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div class="bg-zinc-800 p-4 rounded-lg">
+                            <p class="font-bold text-lg highlight-red">1.</p>
+                            <p class="text-sm font-semibold">深度用户访谈与概念验证</p>
+                            <p class="text-xs text-gray-400">验证H1, H2部分, H4初步</p>
+                        </div>
+                        <div class="bg-zinc-800 p-4 rounded-lg">
+                            <p class="font-bold text-lg highlight-red">2.</p>
+                            <p class="text-sm font-semibold">策划并准备“人工AI”故事实验 (Wizard of Oz)</p>
+                            <p class="text-xs text-gray-400">核心验证H2</p>
+                        </div>
+                        <div class="bg-zinc-800 p-4 rounded-lg">
+                            <p class="font-bold text-lg highlight-red">3.</p>
+                            <p class="text-sm font-semibold">快速竞品体验与差异化分析研讨</p>
+                            <p class="text-xs text-gray-400">了解市场，反思优势</p>
+                        </div>
+                     </div>
+                     <div class="gradient-overlay gradient-red-bottom"></div>
+                </div>
+            </motion.div>
+
+        </div>
+
+        <footer class="text-center mt-12 md:mt-16 py-8 border-t border-gray-800">
+            <p class="text-sm text-gray-500">创业是一个不断假设、验证、调整的过程。拥抱不确定性，用最小的成本去试错，快速学习。</p>
+            <p class="text-xs text-gray-600 mt-1">Good luck to you and your team! <i class="fas fa-hands-helping highlight-red"></i></p>
+        </footer>
+    </div>
+
+    <script>
+        // Framer Motion setup (if needed beyond component props)
+        // For this setup, component props are sufficient.
+        // Ensure to replace motion.div, motion.h1 etc. in your actual React/Vue components if you are using Framer Motion library integration.
+        // For pure HTML/JS, you'd typically select elements and apply animations.
+        // The provided UMD build allows using `motion` object directly in inline scripts or a script tag after loading.
+        // The HTML uses `motion.tag` directly as if it's a custom element for conceptual clarity;
+        // in a real JS setup, you'd use `motion(document.createElement('div'))` or similar or framework integration.
+        // For this static HTML, the motion.* tags are placeholders for Framer Motion's JS capabilities.
+        // The key is to have the framer-motion.umd.js script loaded.
+        
+        // Let's make it work with the UMD bundle
+        const { motion, AnimatePresence } = window.motion;
+
+        document.querySelectorAll('[initial]').forEach(el => {
+            // This is a simplified way to mimic Framer Motion's declarative style
+            // A more robust solution would involve Intersection Observer for whileInView
+            const initialProps = JSON.parse(el.getAttribute('initial').replace(/'/g, '"'));
+            const animateProps = JSON.parse(el.getAttribute('animate')?.replace(/'/g, '"') || el.getAttribute('whileInView').replace(/'/g, '"'));
+            const transitionProps = JSON.parse(el.getAttribute('transition').replace(/'/g, '"'));
+            
+            Object.keys(initialProps).forEach(key => {
+                if (key === 'y' || key === 'x') {
+                    el.style.transform = `${key}(${initialProps[key]}px)`;
+                } else {
+                    el.style[key] = initialProps[key];
+                }
+            });
+            el.style.transitionProperty = Object.keys(animateProps).join(','); // crude
+            el.style.transitionDuration = `${transitionProps.duration || 0.5}s`;
+            if (transitionProps.delay) el.style.transitionDelay = `${transitionProps.delay}s`;
+            if (transitionProps.ease) el.style.transitionTimingFunction = transitionProps.ease;
+
+
+            if (el.getAttribute('animate')) { // For initial load animations
+                 setTimeout(() => {
+                    Object.keys(animateProps).forEach(key => {
+                        if (key === 'y' || key === 'x') {
+                            el.style.transform = `${key}(${animateProps[key]}px)`;
+                        } else {
+                            el.style[key] = animateProps[key];
+                        }
+                    });
+                }, (transitionProps.delay || 0) * 1000); // Apply animate after delay
+            } else if (el.getAttribute('whileInView')) { // For scroll-triggered animations
+                const viewportOptions = JSON.parse(el.getAttribute('viewport').replace(/'/g, '"'));
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            Object.keys(animateProps).forEach(key => {
+                                if (key === 'y' || key === 'x') {
+                                    el.style.transform = `${key}(${animateProps[key]}px)`;
+                                } else {
+                                    el.style[key] = animateProps[key];
+                                }
+                            });
+                            if (viewportOptions.once) {
+                                observer.unobserve(el);
+                            }
+                        }
+                    });
+                }, { threshold: viewportOptions.amount || 0.2 });
+                observer.observe(el);
+            }
+        });
+
+    </script>
+</body>
+</html>
