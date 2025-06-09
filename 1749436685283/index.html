@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>营养师平台 - 创业构想深度剖析</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/framer-motion@7.10.3/dist/framer-motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            background-color: #000000;
+            color: #E0E0E0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+        }
+        .highlight-red {
+            color: #E31937;
+        }
+        .bg-highlight-red {
+            background-color: #E31937;
+        }
+        .border-highlight-red {
+            border-color: #E31937;
+        }
+        .bento-box {
+            background-color: #1A1A1A; /* Slightly lighter than pure black */
+            border-radius: 1rem; /* 16px */
+            padding: 1.5rem; /* 24px */
+            border: 1px solid #333333;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            overflow: hidden; /* For gradient effects */
+            position: relative;
+        }
+        .bento-box:hover {
+            border-color: #E31937;
+        }
+        .bento-title-cn {
+            font-size: 1.875rem; /* 30px */
+            font-weight: 700;
+            line-height: 1.2;
+        }
+        .bento-title-en {
+            font-size: 0.875rem; /* 14px */
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+        .bento-content {
+            font-size: 1rem; /* 16px */
+            color: #D1D5DB; /* gray-300 */
+        }
+        .bento-emphasis {
+            font-size: 3rem; /* 48px */
+            font-weight: 800;
+            line-height: 1;
+        }
+        .bento-emphasis-huge {
+            font-size: 6rem; /* 96px */
+            font-weight: 800;
+            line-height: 1;
+        }
+        .bento-icon {
+            font-size: 2.5rem; /* 40px */
+        }
+        .gradient-text-red {
+            background: linear-gradient(90deg, #E31937, #E31937CC);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+        }
+        .highlight-accent::before {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40%;
+            height: 4px;
+            background: linear-gradient(90deg, #E31937, transparent);
+            border-radius: 2px;
+        }
+         .section-title-cn {
+            font-size: 3rem; /* 48px */
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+        .section-title-en {
+            font-size: 1.125rem; /* 18px */
+            color: #A0A0A0;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 2rem; /* 32px */
+        }
+        .label-hypothesis {
+            font-size: 0.75rem;
+            color: #E31937;
+            border: 1px solid #E31937;
+            padding: 0.1rem 0.4rem;
+            border-radius: 0.25rem;
+            display: inline-block;
+            margin-left: 0.5rem;
+            opacity: 0.8;
+        }
+
+        /* Chart placeholder */
+        .chart-placeholder {
+            width: 100%;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #4A5568; /* gray-600 */
+            color: #A0AEC0; /* gray-500 */
+            border-radius: 0.5rem; /* 8px */
+            margin-top: 1rem;
+        }
+
+        /* Specific Bento Grid Layouts */
+        .grid-module-0 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem; /* 24px */
+        }
+        .grid-module-1, .grid-module-3, .grid-module-4 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .grid-module-2 {
+             display: grid;
+             grid-template-columns: repeat(1, 1fr); /* Default to 1 column for complex items */
+             gap: 1.5rem;
+        }
+
+        @media (min-width: 768px) { /* md */
+            .grid-module-2 {
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            }
+             .md-grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
+             .md-grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
+             .md-col-span-2 { grid-column: span 2 / span 2; }
+        }
+         @media (min-width: 1024px) { /* lg */
+            .lg-grid-cols-4 { grid-template-columns: repeat(4, 1fr); }
+            .lg-col-span-2 { grid-column: span 2 / span 2; }
+            .lg-col-span-3 { grid-column: span 3 / span 3; }
+        }
+
+    </style>
+</head>
+<body class="bg-black text-gray-200 antialiased">
+
+    <div id="app" class="container mx-auto px-4 py-8 md:py-16">
+
+        <!-- Header -->
+        <motion.header 
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            class="text-center mb-16 md:mb-24">
+            <h1 class="text-5xl md:text-7xl font-extrabold mb-2">
+                <span class="gradient-text-red">营养师平台</span> 项目构想
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-400">深度剖析与验证策略</p>
+            <p class="text-sm text-gray-500 mt-1">Nutritionist Platform - Deep Dive & Validation Strategy</p>
+        </motion.header>
+
+        <!-- Module 0: Vision & Soul Searching -->
+        <motion.section 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">0.</span> 项目愿景与灵魂拷问</h2>
+                <p class="section-title-en">Vision & Soul Searching</p>
+            </div>
+            <div class="grid-module-0">
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <div>
+                        <h3 class="bento-title-cn">美好作品想象</h3>
+                        <p class="bento-title-en">Perfect State Vision</p>
+                        <p class="bento-content mt-4">抛开限制，如果平台达到<strong class="highlight-red">最完美状态</strong>，它将给营养师带来独特且积极的改变，赋能他们更高效、更专业地服务客户，进而影响更广泛的世界的健康福祉。</p>
+                    </div>
+                    <i class="fas fa-rocket bento-icon highlight-red self-end mt-4"></i>
+                </motion.div>
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <div>
+                        <h3 class="bento-title-cn">灵魂拷问</h3>
+                        <p class="bento-title-en">Core Value Keyword</p>
+                        <p class="bento-content mt-4">若产品巨大成功，营养师向同行推荐时脱口而出的<strong class="highlight-red">第一个关键词</strong>是什么？</p>
+                        <p class="bento-emphasis mt-3 gradient-text-red">“最懂我”</p>
+                        <p class="bento-content text-sm">或 “最高效”, “最智能”... 这个词定义核心价值。</p>
+                    </div>
+                     <i class="fas fa-key bento-icon highlight-red self-end mt-4"></i>
+                </motion.div>
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <div>
+                        <h3 class="bento-title-cn">团队动机</h3>
+                        <p class="bento-title-en">Team Motivation: Why Us?</p>
+                        <p class="bento-content mt-4">为什么是“<strong class="highlight-red">我们</strong>”团队？独特的经验、洞察、资源或信念是什么？这深刻反映团队的核心价值观和<strong class="highlight-red">与众不同的优势</strong>。</p>
+                        <p class="text-gray-500 text-xs mt-2">(需团队深入思考并明确)</p>
+                    </div>
+                    <i class="fas fa-users bento-icon highlight-red self-end mt-4"></i>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Module 1: Starting Point & Key Factors -->
+        <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">1.</span> 项目出发点与关键要素</h2>
+                <p class="section-title-en">Starting Point & Key Factors</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">成败关键因子</h3>
+                    <p class="bento-title-en">Key Success Factor</p>
+                    <p class="bento-content mt-4">薄弱点：<strong class="highlight-red">“链接”</strong>或<strong class="highlight-red">“服务效率/质量”</strong>。营养师服务客户的工具（链接能力）不足。</p>
+                    <i class="fas fa-link bento-icon highlight-red self-start mt-4"></i>
+                </motion.div>
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="bento-title-cn">用户输入盲区</h3>
+                    <p class="bento-title-en">User Input Blind Spots</p>
+                    <ul class="list-disc list-inside bento-content mt-4 space-y-1">
+                        <li>营养师的客户 (间接影响) <span class="label-hypothesis">待验证</span></li>
+                        <li>行业协会/培训机构</li>
+                        <li>数据隐私与合规性</li>
+                    </ul>
+                     <i class="fas fa-eye-slash bento-icon highlight-red self-start mt-4"></i>
+                </motion.div>
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <h3 class="bento-title-cn">用户重新定义</h3>
+                    <p class="bento-title-en">User Redefinition</p>
+                    <p class="bento-content mt-4">当前：使用者 = 付费者 (营养师)。</p>
+                    <p class="bento-content mt-2">思考：机构统一采购？<span class="label-hypothesis">待验证</span></p>
+                    <i class="fas fa-user-friends bento-icon highlight-red self-start mt-4"></i>
+                </motion.div>
+                <motion.div class="bento-box border-highlight-red" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.4 }}>
+                    <h3 class="bento-title-cn">盈利模式</h3>
+                    <p class="bento-title-en">Revenue Model</p>
+                    <p class="bento-content mt-4"><strong class="highlight-red">不明确是重大风险点！</strong></p>
+                    <p class="bento-content mt-2">直接关联“营养师是否愿付费”的关键假设。</p>
+                    <i class="fas fa-dollar-sign bento-icon highlight-red self-start mt-4"></i>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Module 2: User Persona & Urgency -->
+        <motion.section 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">2.</span> 用户角色与需求迫切度</h2>
+                <p class="section-title-en">User Persona & Urgency</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-2 gap-6">
+                 <motion.div class="bento-box lg:col-span-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">目标用户：营养师</h3>
+                    <p class="bento-title-en">Target User: Nutritionist</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <p class="bento-content font-semibold">心理痛点:</p>
+                            <ul class="list-disc list-inside bento-content space-y-1 text-sm">
+                                <li>客户管理混乱、耗时</li>
+                                <li>难追踪客户依从性与效果</li>
+                                <li>个性化指导工作量大</li>
+                                <li>缺系统工具支持专业形象</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="bento-content font-semibold">待验证假设 <i class="fas fa-flask highlight-red"></i>:</p>
+                            <ul class="list-disc list-inside bento-content space-y-1 text-sm">
+                                <li>不同类型营养师付费意愿差异?</li>
+                                <li>客户管理效率是核心瓶颈?</li>
+                                <li>AI“了解客户”功能价值感知与付费意愿?</li>
+                            </ul>
+                        </div>
+                    </div>
+                     <i class="fas fa-user-doctor bento-icon highlight-red self-start mt-6"></i>
+                </motion.div>
+
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="bento-title-cn">场景设想还原 (痛点)</h3>
+                    <p class="bento-title-en">Scenario Recreation (Pain Points)</p>
+                    <p class="bento-content mt-4 italic">“我是营养师王小姐...一天下来，大半时间都花在这些<strong class="highlight-red">琐碎的记录和查找</strong>上了，真正用来思考方案和深度沟通的时间反而不够。有时候客户一多，真怕<strong class="highlight-red">搞混了信息</strong>...”</p>
+                    <i class="fas fa-user-clock bento-icon highlight-red self-end mt-4 opacity-70"></i>
+                </motion.div>
+
+                <motion.div class="bento-box border-highlight-red" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <h3 class="bento-title-cn highlight-red">关键假设：付费意愿</h3>
+                    <p class="bento-title-en">CRITICAL ASSUMPTION: WILLINGNESS TO PAY</p>
+                    <p class="bento-emphasis-huge gradient-text-red mt-4">?</p>
+                    <p class="bento-content mt-2">营养师是否愿意为这套管理工具<strong class="highlight-red">付费</strong>。这个假设贯穿始终。</p>
+                    <i class="fas fa-sack-dollar bento-icon highlight-red self-start mt-4"></i>
+                </motion.div>
+            </div>
+
+            <motion.div class="bento-box mt-6" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.4 }}>
+                <h3 class="bento-title-cn">当前方案 vs. 设想方案</h3>
+                <p class="bento-title-en">Current vs. Envisioned Solution</p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-4">
+                    <div>
+                        <p class="bento-content font-semibold"><i class="fas fa-times-circle text-red-500 mr-2"></i>当前方案 (阻力)</p>
+                        <ul class="list-disc list-inside bento-content space-y-1 text-sm pl-4">
+                            <li><strong class="text-gray-400">客户信息管理:</strong> Excel手动, 微信分散</li>
+                            <li><strong class="text-gray-400">客户过程追踪:</strong> 依赖记忆, 手动记录</li>
+                            <li><strong class="text-gray-400">客户沟通互动:</strong> 微信便捷但信息易淹没</li>
+                            <li><strong class="text-gray-400">方案制定调整:</strong> 依赖经验, 手动查资料</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <p class="bento-content font-semibold"><i class="fas fa-check-circle text-green-500 mr-2"></i>设想方案 (动力)</p>
+                         <ul class="list-disc list-inside bento-content space-y-1 text-sm pl-4">
+                            <li><strong class="text-gray-400">客户信息管理:</strong> CRM结构化, 统一视图</li>
+                            <li><strong class="text-gray-400">客户过程追踪:</strong> CRM+AI自动记录, 数据可视化</li>
+                            <li><strong class="text-gray-400">客户沟通互动:</strong> 平台内工具/集成微信, 记录归档</li>
+                            <li><strong class="text-gray-400">方案制定调整:</strong> AI辅助建议, 个性化参考</li>
+                        </ul>
+                    </div>
+                </div>
+                <p class="bento-content mt-4 text-xs text-gray-400">潜在优势：效率提升、专业性增强、AI洞察。潜在劣势：学习成本、数据迁移、AI信任度。</p>
+            </motion.div>
+        </motion.section>
+
+        <!-- Module 3: Market & Opportunity -->
+        <motion.section 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">3.</span> 市场现状与机会识别</h2>
+                <p class="section-title-en">Market & Opportunity</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">市场结构判断</h3>
+                    <p class="bento-title-en">Market Structure</p>
+                    <p class="bento-content mt-4"><strong class="highlight-red">成长期初期 / 分散</strong> <span class="label-hypothesis">待验证</span></p>
+                    <p class="bento-content mt-1">用户成熟度: <strong class="highlight-red">中 / 中低</strong> <span class="label-hypothesis">待验证</span></p>
+                    <p class="text-xs text-gray-500 mt-2">细分领域工具可能刚起步，市场需教育。</p>
+                    <i class="fas fa-chart-pie bento-icon highlight-red self-start mt-4 opacity-70"></i>
+                </motion.div>
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="bento-title-cn">竞品与参考</h3>
+                    <p class="bento-title-en">Competitors & References</p>
+                    <p class="bento-content mt-4">直接：专用CRM (需调研)</p>
+                    <p class="bento-content mt-1">间接：<strong class="highlight-red">Excel, 微信,</strong> 通用CRM, 笔记应用</p>
+                    <p class="bento-content mt-1">参考：健身教练工具, 自由职业者CRM</p>
+                    <i class="fas fa-users-viewfinder bento-icon highlight-red self-start mt-4 opacity-70"></i>
+                </motion.div>
+                <motion.div class="bento-box lg:col-span-1 md:col-span-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <h3 class="bento-title-cn">差异化与机会</h3>
+                    <p class="bento-title-en">Differentiation & Opportunity</p>
+                    <p class="bento-content mt-4">核心：<strong class="highlight-red">智能化客户洞察</strong> (AI)</p>
+                    <p class="bento-content mt-1">关键：<strong class="highlight-red">营养师专属工作流优化</strong></p>
+                    <p class="text-xs text-gray-500 mt-2">结构性机会：若能有效解决核心痛点，则存在机会。</p>
+                    <i class="fas fa-lightbulb bento-icon highlight-red self-start mt-4 opacity-70"></i>
+                </motion.div>
+                <motion.div class="bento-box md:col-span-2 lg:col-span-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.4 }}>
+                    <h3 class="bento-title-cn">品牌心智定位 & 市场规模</h3>
+                    <p class="bento-title-en">Brand Positioning & Market Size</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <p class="bento-content font-semibold">核心定位:</p>
+                            <p class="bento-content">当营养师希望<strong class="highlight-red">高效管理客户、通过智能分析更懂客户</strong>时，第一个想到我们。</p>
+                            <p class="bento-content font-semibold mt-2">品牌感受:</p>
+                            <p class="bento-content"><span class="highlight-red">智能</span>、高效、专业、赋能</p>
+                        </div>
+                        <div>
+                            <p class="bento-content font-semibold">市场规模 (TAM/SAM/SOM):</p>
+                            <div class="chart-placeholder">
+                                <i class="fas fa-chart-line text-4xl mr-2"></i> 需实际调研数据支撑
+                            </div>
+                            <p class="text-xs text-gray-500 mt-1">判断项目天花板至关重要。</p>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Module 4: Solution & Validation Points -->
+        <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">4.</span> 方案结构与验证要点</h2>
+                <p class="section-title-en">Solution & Validation Points</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
+                <motion.div class="bento-box lg:col-span-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">核心功能组成</h3>
+                    <p class="bento-title-en">Core Features</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4">
+                        <div class="p-3 bg-gray-800 rounded-lg">
+                            <i class="fas fa-address-book highlight-red text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-white">客户档案管理 (CRM)</h4>
+                            <p class="text-xs text-gray-400">结构化、系统化、易检索。</p>
+                        </div>
+                        <div class="p-3 bg-gray-800 rounded-lg">
+                             <i class="fas fa-brain highlight-red text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-white">AI客户行为/健康分析</h4>
+                            <p class="text-xs text-gray-400">智能化洞察，发现隐藏模式。</p>
+                        </div>
+                        <div class="p-3 bg-gray-800 rounded-lg">
+                             <i class="fas fa-robot highlight-red text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-white">AI辅助方案制定</h4>
+                            <p class="text-xs text-gray-400">提高效率，拓展思路。</p>
+                        </div>
+                        <div class="p-3 bg-gray-800 rounded-lg">
+                             <i class="fas fa-comments highlight-red text-2xl mb-2"></i>
+                            <h4 class="font-semibold text-white">客户沟通与随访</h4>
+                            <p class="text-xs text-gray-400">记录打通，流程化提醒。</p>
+                        </div>
+                    </div>
+                     <p class="text-sm text-gray-500 mt-4">可能的附加功能：内容/知识库。</p>
+                </motion.div>
+
+                <motion.div class="bento-box" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="bento-title-cn">用户行为路径 (营养师端)</h3>
+                    <p class="bento-title-en">User Journey (Nutritionist)</p>
+                    <ol class="list-decimal list-inside bento-content mt-4 space-y-2 text-sm">
+                        <li><strong>注册与上手:</strong> 引导清晰，快速感受价值 (<i class="fas fa-magic highlight-red"></i> "Aha!")</li>
+                        <li><strong>日常客户管理:</strong> 高效信息管理 (<i class="fas fa-folder-open highlight-red"></i> "Aha!")</li>
+                        <li><strong>使用AI工具:</strong> 获得洞察/节省时间 (<i class="fas fa-lightbulb highlight-red"></i> "Aha!")</li>
+                        <li><strong>与客户互动:</strong> 专业高效沟通 (<i class="fas fa-comments-dollar highlight-red"></i> "Aha!")</li>
+                        <li><strong>价值感知与留存:</strong> 确认价值，愿意续费 (<i class="fas fa-hand-holding-dollar highlight-red"></i> "Aha!")</li>
+                    </ol>
+                </motion.div>
+
+                <motion.div class="bento-box border-highlight-red" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <h3 class="bento-title-cn">核心方案假设清单</h3>
+                    <p class="bento-title-en">Core Solution Hypotheses</p>
+                     <ul class="list-none bento-content mt-4 space-y-2">
+                        <li><strong class="bento-emphasis gradient-text-red mr-2">H1</strong> <strong class="highlight-red">付费意愿:</strong> 营养师愿为专业工具付费。 (极高优先级)</li>
+                        <li><strong>H2</strong> AI价值: AI分析与建议获专业认可。 (高)</li>
+                        <li><strong>H3</strong> 用户投入: 愿学习并规范录入数据。 (高)</li>
+                        <li><strong>H4</strong> 方案优势: 显著优于现有方案。 (高)</li>
+                        <li><strong>H5</strong> 市场潜力: 足够付费用户支撑。 (中高)</li>
+                    </ul>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Module 5: Risk & MVP Strategy -->
+        <motion.section
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">5.</span> 风险因素与验证设计</h2>
+                <p class="section-title-en">Risk & MVP Strategy</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                 <motion.div class="bento-box lg:col-span-2 border-highlight-red" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">核心假设验证 (Top Priority)</h3>
+                    <p class="bento-title-en">Core Hypothesis Validation</p>
+                    <div class="mt-4 space-y-3">
+                        <div class="flex items-start">
+                            <span class="bento-emphasis gradient-text-red mr-3">H1</span>
+                            <div>
+                                <p class="font-semibold text-white">营养师愿意为工具付费。</p>
+                                <p class="text-xs text-gray-400">验证方式：深度访谈 (含价格锚点), MVP预售。</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start">
+                            <span class="bento-emphasis gradient-text-red mr-3">H2</span>
+                            <div>
+                                <p class="font-semibold text-white">AI工具的分析和建议能达到专业认可。</p>
+                                <p class="text-xs text-gray-400">验证方式：“纸面原型”或“Wizard of Oz”测试。</p>
+                            </div>
+                        </div>
+                    </div>
+                     <i class="fas fa-vial-circle-check bento-icon highlight-red self-end mt-4"></i>
+                </motion.div>
+
+                <motion.div class="bento-box border-2 border-highlight-red" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="bento-title-cn">最可能失败点 <i class="fas fa-skull-crossbones"></i></h3>
+                    <p class="bento-title-en">The Killing Stone</p>
+                    <p class="bento-emphasis-huge gradient-text-red mt-3">NO</p>
+                    <p class="bento-content mt-2"><strong class="highlight-red">付费意愿不足</strong> 或对价格高度敏感。</p>
+                    <p class="text-xs text-gray-500 mt-1">其他：AI华而不实, 产品操作复杂, 价值区隔不明显。</p>
+                </motion.div>
+
+                <motion.div class="bento-box lg:col-span-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                    <h3 class="bento-title-cn">MVP 验证路径策略</h3>
+                    <p class="bento-title-en">MVP Validation Path</p>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 text-center">
+                        <div class="p-3 bg-gray-800/70 rounded-lg">
+                            <div class="text-4xl font-bold highlight-red">1</div>
+                            <p class="font-semibold text-white mt-1">深度访谈</p>
+                            <p class="text-xs text-gray-400">需求验证, 付费意愿测试</p>
+                        </div>
+                        <div class="p-3 bg-gray-800/70 rounded-lg">
+                            <div class="text-4xl font-bold highlight-red">2</div>
+                            <p class="font-semibold text-white mt-1">人工服务 / Wizard of Oz</p>
+                            <p class="text-xs text-gray-400">模拟AI流程, 验证AI价值</p>
+                        </div>
+                        <div class="p-3 bg-gray-800/70 rounded-lg">
+                            <div class="text-4xl font-bold highlight-red">3</div>
+                            <p class="font-semibold text-white mt-1">借用工具 + 脚本</p>
+                            <p class="text-xs text-gray-400">极简CRM雏形, 验证数据录入</p>
+                        </div>
+                        <div class="p-3 bg-gray-800/70 rounded-lg">
+                            <div class="text-4xl font-bold highlight-red">4</div>
+                            <p class="font-semibold text-white mt-1">最小版本开发</p>
+                            <p class="text-xs text-gray-400">1-2核心功能, 验证闭环</p>
+                        </div>
+                    </div>
+                    <p class="text-sm text-center mt-4 text-yellow-400"><i class="fas fa-exclamation-triangle mr-1"></i> 在H1 (付费意愿) 获积极信号前，<strong class="font-bold">不宜投入大量开发</strong>。</p>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Module 6: Strategic Judgment & Next Step -->
+        <motion.section 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.1 }}
+            transition={{ duration: 0.5 }}
+            class="mb-16 md:mb-24">
+            <div class="text-center mb-8 md:mb-12">
+                <h2 class="section-title-cn"><span class="highlight-red">6.</span> 战略判断与下一步</h2>
+                <p class="section-title-en">Strategic Judgment & Next Step</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-3 gap-6">
+                <motion.div class="bento-box lg:col-span-2" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.2 }} transition={{ duration: 0.5, delay: 0.1 }}>
+                    <h3 class="bento-title-cn">综合评估与核心结论</h3>
+                    <p class="bento-title-en">Overall Assessment & Key Conclusions</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+                        <div>
+                            <p class="bento-content font-semibold"><i class="fas fa-lightbulb text-yellow-400 mr-2"></i>最大机会:</p>
+                            <ul class="list-disc list-inside bento-content space-y-1 text-sm pl-4">
+                                <li>精准定位痛点</li>
+                                <li>"CRM+AI"差异化潜力</li>
+                                <li>市场增长，专业工具需求提升</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <p class="bento-content font-semibold"><i class="fas fa-bomb text-red-500 mr-2"></i>最致命风险:</p>
+                            <ul class="list-disc list-inside bento-content space-y-1 text-sm pl-4">
+                                <li><strong class="highlight-red">付费意愿完全未验证</strong></li>
+                                <li>AI实际价值难把握</li>
+                                <li>盈利模式不清晰</li>
+                            </ul>
+                        </div>
+                    </div>
+                </motion.div>
+
+                <motion.div class="bento-box bg-highlight-red text-black" initial={{ opacity: 0, scale:0.8 }} whileInView={{ opacity: 1, scale:1 }} viewport={{ once: true, amount: 0.3 }} transition={{ duration: 0.5, delay: 0.2 }}>
+                    <h3 class="text-3xl font-bold">建议: Go / No-Go?</h3>
+                    <p class="text-sm uppercase tracking-wider">Recommendation</p>
+                    <p class="text-7xl font-extrabold my-6">VERIFY</p>
+                    <p class="font-semibold">谨慎验证</p>
+                    <p class="text-sm mt-2">理由：切入点合理，方案有潜力，但核心商业可行性 (付费意愿) 未知。</p>
+                    <i class="fas fa-microscope text-5xl opacity-30 absolute bottom-4 right-4"></i>
+                </motion.div>
+
+                <motion.div class="bento-box lg:col-span-3" initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, amount: 0.1 }} transition={{ duration: 0.5, delay: 0.3 }}>
+                     <h3 class="bento-title-cn">下一步行动计划 (未来两周)</h3>
+                    <p class="bento-title-en">Next Action Plan (Next 2 Weeks)</p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                        <div class="flex items-start p-4 bg-gray-800/70 rounded-lg">
+                            <div class="text-5xl font-bold highlight-red mr-4">1</div>
+                            <div>
+                                <h4 class="font-semibold text-white">用户深度访谈</h4>
+                                <p class="text-sm text-gray-400">验证H1 (付费意愿), 初探H2 (AI价值)。至少10-15位营养师。</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start p-4 bg-gray-800/70 rounded-lg">
+                            <div class="text-5xl font-bold highlight-red mr-4">2</div>
+                            <div>
+                                <h4 class="font-semibold text-white">制作“纸面原型”</h4>
+                                <p class="text-sm text-gray-400">辅助验证H1, 具体化H2。PPT/Figma示意图。</p>
+                            </div>
+                        </div>
+                         <div class="flex items-start p-4 bg-gray-800/70 rounded-lg">
+                            <div class="text-5xl font-bold highlight-red mr-4">3</div>
+                            <div>
+                                <h4 class="font-semibold text-white">明确盈利模式假设</h4>
+                                <p class="text-sm text-gray-400">为H1验证提供具体锚点。构思价格梯度。</p>
+                            </div>
+                        </div>
+                    </div>
+                </motion.div>
+            </div>
+        </motion.section>
+
+        <!-- Footer Call to Action -->
+        <motion.footer
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true, amount: 0.2 }}
+            transition={{ duration: 0.8 }} 
+            class="text-center mt-16 md:mt-24 py-12 border-t border-gray-800">
+            <h3 class="text-3xl md:text-4xl font-bold mb-4">
+                假设 <i class="fas fa-arrow-right-long mx-2"></i> 验证 <i class="fas fa-arrow-right-long mx-2"></i> 认知 <i class="fas fa-arrow-right-long mx-2"></i> 行动
+            </h3>
+            <p class="text-lg text-gray-400">HYPOTHESIZE <i class="fas fa-arrow-right-long mx-1 text-xs"></i> VALIDATE <i class="fas fa-arrow-right-long mx-1 text-xs"></i> LEARN <i class="fas fa-arrow-right-long mx-1 text-xs"></i> ACT</p>
+            <p class="mt-6 text-xl highlight-red font-semibold">
+                最重要的任务：走出去，与目标用户真实交流，用最小成本验证最致命的假设。
+            </p>
+            <p class="mt-2 text-gray-500">Good luck with your venture!</p>
+        </motion.footer>
+
+    </div>
+
+    <script>
+        // Framer Motion setup (if needed for more complex scenarios, basic usage is inline)
+        // const { motion } = Motion; // if using script tag for framer motion
+
+        // Example: Apply stagger to children of a container
+        const containerVariants = {
+            hidden: { opacity: 0 },
+            visible: {
+                opacity: 1,
+                transition: {
+                    staggerChildren: 0.1 // Adjust stagger delay as needed
+                }
+            }
+        };
+
+        const itemVariants = {
+            hidden: { opacity: 0, y: 20 },
+            visible: { 
+                opacity: 1, 
+                y: 0,
+                transition: { duration: 0.5, ease: "easeOut" }
+            }
+        };
+
+        // You would then apply these variants to your motion.div elements if you want a parent to control children's stagger.
+        // For simplicity, the current HTML uses individual whileInView on each box.
+        // If you want to use the above, you'd add:
+        // Parent: <motion.div variants={containerVariants} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.1 }}>
+        // Child: <motion.div variants={itemVariants}> ... </motion.div> // Note: child doesn't need its own initial/whileInView if parent controls
+        // This is more useful for lists or grids where each item animates in sequence.
+        // The current implementation is simpler and often sufficient for Bento Grids.
+
+    </script>
+
+</body>
+</html>
