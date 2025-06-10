@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创业项目审视 - Project Vision</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/framer-motion@10/dist/framer-motion.umd.js"></script>
+
+    <style>
+        body {
+            background-color: #000000;
+            color: #E5E7EB; /* Tailwind gray-200 */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+            overflow-x: hidden; /* Prevent horizontal scroll from animations */
+        }
+        .highlight-text {
+            color: #E31937;
+        }
+        .highlight-bg {
+            background-color: #E31937;
+        }
+        .highlight-bg-gradient {
+            background: linear-gradient(90deg, rgba(227,25,55,0.8) 0%, rgba(227,25,55,0.3) 100%);
+        }
+        .bento-box {
+            background-color: #111827; /* Tailwind gray-900 */
+            border-radius: 1rem; /* Tailwind rounded-xl */
+            padding: 1.5rem; /* Tailwind p-6 */
+            border: 1px solid #374151; /* Tailwind gray-700 */
+            display: flex;
+            flex-direction: column;
+        }
+        .chinese-title {
+            font-size: 2.25rem; /* Tailwind text-4xl */
+            font-weight: 700; /* Tailwind font-bold */
+            line-height: 2.5rem; /* Tailwind leading-10 */
+        }
+        .english-subtitle {
+            font-size: 0.875rem; /* Tailwind text-sm */
+            color: #9CA3AF; /* Tailwind gray-400 */
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-top: 0.25rem;
+        }
+        .placeholder-text {
+            color: #6B7280; /* Tailwind gray-500 */
+            font-style: italic;
+            border-left: 3px solid #E31937;
+            padding-left: 0.75rem;
+            margin-top: 0.75rem;
+            font-size: 0.9rem;
+        }
+        .guidance {
+            font-size: 0.8rem;
+            color: #9CA3AF; /* Tailwind gray-400 */
+            margin-top: 1rem;
+            border-top: 1px dashed #4B5563; /* Tailwind gray-600 */
+            padding-top: 0.75rem;
+        }
+        .guidance i {
+            margin-right: 0.5rem;
+            color: #E31937;
+        }
+        .big-number {
+            font-size: 6rem; /* Tailwind text-8xl or 9xl */
+            font-weight: 800; /* Tailwind font-extrabold */
+            color: #E31937;
+            opacity: 0.6;
+            position: absolute;
+            right: 1rem;
+            bottom: -0.5rem;
+            z-index: 0;
+            line-height: 1;
+        }
+        .table-like { margin-top: 1rem; }
+        .table-row { display: flex; flex-direction: column; md:flex-direction: row; border-bottom: 1px solid #374151; padding: 0.75rem 0; }
+        .table-header { font-weight: 600; color: #D1D5DB; /* gray-300 */ flex-basis: 30%; padding-right:1rem; }
+        .table-content { flex-basis: 70%; }
+        .checkbox-label { display: flex; align-items: center; margin-bottom: 0.5rem; }
+        .checkbox-label input { accent-color: #E31937; margin-right: 0.5rem; }
+
+        /* Simple line art for TAM/SAM/SOM example */
+        .bar-chart-container { display: flex; align-items: flex-end; height: 100px; margin-top: 1rem; }
+        .bar { background-color: #E31937; margin-right: 10px; transition: height 0.5s ease-out; }
+        .bar-label { font-size: 0.75rem; text-align: center; color: #9CA3AF; }
+    </style>
+</head>
+<body class="text-gray-200">
+
+    <div id="root" class="p-4 md:p-8"></div>
+
+    <script type="text/babel">
+        const { motion } = Framer;
+
+        const MotionBox = ({ children, className, colSpan, rowSpan }) => {
+            const gridClasses = `${colSpan ? `md:col-span-${colSpan}` : ''} ${rowSpan ? `md:row-span-${rowSpan}` : ''}`;
+            return (
+                <motion.div
+                    className={`bento-box relative overflow-hidden ${gridClasses} ${className || ''}`}
+                    initial={{ opacity: 0, y: 50, scale: 0.95 }}
+                    whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, ease: "circOut" }}
+                >
+                    {children}
+                </motion.div>
+            );
+        };
+
+        const App = () => {
+            // Placeholder for dynamic chart data interaction
+            React.useEffect(() => {
+                // Example: animate bars on view
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.querySelectorAll('.bar').forEach(bar => {
+                                bar.style.height = bar.dataset.height;
+                            });
+                        }
+                    });
+                }, { threshold: 0.5 });
+
+                document.querySelectorAll('.bar-chart-container').forEach(el => observer.observe(el));
+            }, []);
+
+            return (
+                <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+                    {/* Module 0: Vision & Soul Searching */}
+                    <MotionBox colSpan={2} className="md:col-span-2 lg:col-span-2">
+                        <div className="big-number">愿</div>
+                        <h2 className="chinese-title">模块 0: 项目愿景与灵魂拷问</h2>
+                        <p className="english-subtitle">Module 0: Vision & Soul Searching</p>
+                        <p className="mt-2 text-gray-400">在深入细节之前，我们首先要明确项目的初心和灵魂。这不仅关乎情怀，更关乎项目在面对挑战时能否保持正确的航向。</p>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} rowSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <div className="big-number" style={{fontSize: '8rem', right: '1.5rem', bottom: '0rem', opacity: 0.4}}>4</div>
+                        <h3 className="chinese-title text-2xl">0.1 美好作品想象</h3>
+                        <p className="english-subtitle">Perfect Product Vision</p>
+                        <p className="placeholder-text">根据你提供的资料 “7. 美好作品想象：4”，我理解你对产品的完美形态有如下的设想：[请在此处结合用户输入的“4”号内容，详细描述你对产品“完美形态”的想象。例如：它解决了什么核心问题？用户使用它时是什么样的体验？它如何让世界变得更美好，带来了哪些独特的、积极的改变？]</p>
+                        <div className="guidance">
+                            <i className="fas fa-lightbulb"></i>这个想像是非常宝贵的起点。但请思考，这个“完美形态”是基于你当前的认知，还是已经有初步的用户反馈或市场信号支持？我们后续会不断回到这里，检验我们的方向是否偏离了这个初心。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <div className="big-number" style={{fontSize: '8rem', opacity: 0.4}}>5</div>
+                        <h3 className="chinese-title text-2xl">0.2 灵魂拷问</h3>
+                        <p className="english-subtitle">Soul Searching Question</p>
+                        <p className="placeholder-text">根据你提供的资料 “8. 灵魂拷问：5”，你希望用户在向朋友推荐产品时，脱口而出的第一个关键词是：[请在此处结合用户输入的“5”号内容，明确这个关键词。例如：“最专业的”、“最有趣的”、“最可靠的”、“最省心的”等。]</p>
+                        <div className="guidance">
+                            <i className="fas fa-key"></i>这个关键词直接关联到产品的核心价值主张和品牌定位。它是否足够独特和有吸引力？它是否能清晰地传递给用户？这会是我们后续在市场定位和产品设计中需要反复验证的“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                         <div className="big-number" style={{fontSize: '8rem', opacity: 0.4}}>6</div>
+                        <h3 className="chinese-title text-2xl">0.3 团队动机</h3>
+                        <p className="english-subtitle">Team Motivation</p>
+                        <p className="placeholder-text">根据你提供的资料 “9. 团队动机：6”，你认为“我们”是做这件事最独一无二的团队，理由是：[请在此处结合用户输入的“6”号内容，阐述团队的核心信念、独特优势、以及这件事如何深刻反映了这些。例如：团队在某个领域的深厚积累、独特的技术壁垒、对特定用户群体的深刻理解等。]</p>
+                        <div className="guidance">
+                            <i className="fas fa-users"></i>团队的基因往往决定了产品的气质和发展方向。这些优势是真实的壁垒，还是仅仅是“我们认为的优势”？它们是否能转化为用户可感知的价值？这也是一个需要持续审视的“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    {/* Module 1: Starting Point & Key Factors */}
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>启</div>
+                        <h2 className="chinese-title">模块 1: 项目出发点与关键要素梳理</h2>
+                        <p className="english-subtitle">Module 1: Starting Point & Key Factors</p>
+                        <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-4">
+                            <div className="highlight-bg-gradient p-4 rounded-lg">
+                                <p className="text-sm text-gray-300">项目主题 Project Theme</p>
+                                <p className="text-5xl font-bold highlight-text">1</p>
+                            </div>
+                            <div className="highlight-bg-gradient p-4 rounded-lg">
+                                <p className="text-sm text-gray-300">目标用户 Target User</p>
+                                <p className="text-5xl font-bold highlight-text">1</p>
+                            </div>
+                            <div className="highlight-bg-gradient p-4 rounded-lg">
+                                <p className="text-sm text-gray-300">使用场景 Use Case</p>
+                                <p className="text-5xl font-bold highlight-text">1</p>
+                            </div>
+                        </div>
+                        <div className="table-like mt-6">
+                            <div className="table-row hidden md:flex bg-gray-800 p-2 rounded-t-md">
+                                <div className="table-header">核心问题</div>
+                                <div className="table-header" style={{flexBasis: '25%'}}>检查点说明</div>
+                                <div className="table-header" style={{flexBasis: '25%'}}>你的思考与回答</div>
+                                <div className="table-header" style={{flexBasis: '20%'}}>导师批注与追问</div>
+                            </div>
+                            <div className="table-row">
+                                <div className="table-header"><strong className="md:hidden">核心问题: </strong>项目成败的关键因子？</div>
+                                <div className="table-content text-sm text-gray-400" style={{flexBasis: '25%'}}><strong className="md:hidden">检查点: </strong>是供给、需求，还是链接？当前哪个环节最薄弱？</div>
+                                <div className="placeholder-text table-content" style={{flexBasis: '25%'}}>结合你的“项目主题：1”，你认为成功的关键是创造足够的需求，还是提供优质的供给，亦或是高效地将两者匹配起来？当前你觉得哪个环节的挑战最大？</div>
+                                <div className="guidance table-content text-xs" style={{flexBasis: '20%'}}><i className="fas fa-balance-scale"></i>这是对商业模式本质的判断。不同的关键因子，对应着完全不同的资源投入优先级和运营重点。这个判断本身就是一个重大的“<span className="highlight-text font-semibold">待验证假设</span>”。</div>
+                            </div>
+                             <div className="table-row">
+                                <div className="table-header"><strong className="md:hidden">核心问题: </strong>用户输入是否存在盲区？</div>
+                                <div className="table-content text-sm text-gray-400" style={{flexBasis: '25%'}}><strong className="md:hidden">检查点: </strong>是否遗漏了关键角色（如决策者、影响者）、或忽略了重要的边界条件（如地区政策限制）？</div>
+                                <div className="placeholder-text table-content" style={{flexBasis: '25%'}}>在你设想的“目标用户：1”和“使用场景：1”中，是否还存在其他影响最终决策或使用的角色？例如，B端产品中，使用者可能是员工，但决策者是老板，影响者可能是IT部门。C端产品中，孩子使用，家长付费。是否存在你未曾考虑到的政策、法规或行业潜规则等边界条件？</div>
+                                <div className="guidance table-content text-xs" style={{flexBasis: '20%'}}><i className="fas fa-user-secret"></i>遗漏关键角色或边界条件，可能导致产品设计偏离实际需求，或在推广中遭遇巨大阻力。</div>
+                            </div>
+                            <div className="table-row">
+                                <div className="table-header"><strong className="md:hidden">核心问题: </strong>用户是否需要重新定义？</div>
+                                <div className="table-content text-sm text-gray-400" style={{flexBasis: '25%'}}><strong className="md:hidden">检查点: </strong>使用者 ≠ 付费者？是否存在多边关系？</div>
+                                <div className="placeholder-text table-content" style={{flexBasis: '25%'}}>你的“目标用户：1”是产品的使用者，还是最终的付费者？或者两者皆是？如果不是，那么付费者的需求和动机是什么？产品是否需要同时满足多方用户的需求（例如，平台型产品连接买家和卖家）？</div>
+                                <div className="guidance table-content text-xs" style={{flexBasis: '20%'}}><i className="fas fa-users-cog"></i>清晰定义用户和客户（付费者）至关重要。若两者分离，则需要分别理解他们的痛点和价值诉求。这直接影响产品的核心功能设计和商业模式。这也是一个“<span className="highlight-text font-semibold">待验证假设</span>”。</div>
+                            </div>
+                        </div>
+                    </MotionBox>
+
+                    {/* Module 2: User Persona & Urgency */}
+                     <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>人</div>
+                        <h2 className="chinese-title">模块 2: 用户角色与需求迫切度分析</h2>
+                        <p className="english-subtitle">Module 2: User Persona & Urgency</p>
+                    </MotionBox>
+
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <h3 className="chinese-title text-2xl">2.1 用户画像与链路角色</h3>
+                        <p className="english-subtitle">User Persona & Roles</p>
+                        <p className="placeholder-text mt-2">根据你提供的“目标用户：1”，我们需要将其具体化。请尝试补充以下信息：(表格内容)</p>
+                        <div className="overflow-x-auto">
+                            <table className="w-full mt-4 text-sm text-left">
+                                <thead className="text-xs text-gray-300 uppercase bg-gray-700">
+                                    <tr>
+                                        <th scope="col" className="px-4 py-3">用户角色</th>
+                                        <th scope="col" className="px-4 py-3">群体规模</th>
+                                        <th scope="col" className="px-4 py-3">角色身份</th>
+                                        <th scope="col" className="px-4 py-3">工作/生活方式</th>
+                                        <th scope="col" className="px-4 py-3">获客渠道</th>
+                                        <th scope="col" className="px-4 py-3"><i className="fas fa-heart mr-1 highlight-text"></i>情感动机</th>
+                                        <th scope="col" className="px-4 py-3"><i className="fas fa-brain mr-1 highlight-text"></i>心理痛点</th>
+                                        <th scope="col" className="px-4 py-3"><i className="fas fa-bolt mr-1 highlight-text"></i>行为触发点</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="border-b border-gray-700">
+                                        <td className="px-4 py-3 placeholder-text">[角色名称1]</td>
+                                        <td className="px-4 py-3 placeholder-text">[预估或数据]</td>
+                                        <td className="px-4 py-3 placeholder-text">[例如：XX公司市场经理]</td>
+                                        <td className="px-4 py-3 placeholder-text">[描述其典型一天]</td>
+                                        <td className="px-4 py-3 placeholder-text">[例如：行业社群]</td>
+                                        <td className="px-4 py-3 placeholder-text">[渴望被认可]</td>
+                                        <td className="px-4 py-3 placeholder-text">[现有工具难用]</td>
+                                        <td className="px-4 py-3 placeholder-text">[接到XX任务时]</td>
+                                    </tr>
+                                    {/* Add more rows as needed */}
+                                </tbody>
+                            </table>
+                        </div>
+                         <div className="guidance">
+                            <i className="fas fa-user-astronaut"></i>用户画像不是凭空想象，而是基于观察、访谈和数据的总结。初期可以是假设，但必须尽快验证。你对“目标用户：1”的理解有多深？这些描述是基于事实，还是你的推测？
+                        </div>
+                    </MotionBox>
+                     <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <h3 className="chinese-title text-2xl">2.2 场景设想还原</h3>
+                        <p className="english-subtitle">Scenario Imagination</p>
+                        <p className="placeholder-text mt-2">根据你提供的“使用场景：1”，请用第一人称或场景剧的形式，生动还原用户的典型任务、行为链与决策动因：[请在此处结合用户输入的“1”号内容，描述一个或多个具体的用户故事。例如：“我是小明，一个项目经理。每天早上，我打开电脑的第一件事就是… 因为… 我感到很烦躁。如果有一个工具能帮我… 我会觉得…”]</p>
+                         <div className="guidance">
+                            <i className="fas fa-theater-masks"></i>场景的生动性有助于我们共情用户，发现那些隐藏在行为背后的真实需求和痛点。这个场景的真实性和普遍性如何？这是高频场景还是低频场景？其痛点强度是否足够支撑用户付费或改变习惯？这些都是“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-2">
+                        <div className="big-number" style={{fontSize: '8rem', opacity: 0.4}}>2</div>
+                        <h3 className="chinese-title text-2xl">2.3 用户当前解决方案与设想方案对比</h3>
+                        <p className="english-subtitle">Current vs. Envisioned Solution</p>
+                        <p className="mt-2"><strong>目前解决方案：</strong> <span className="placeholder-text">[来自你输入的“2”]</span></p>
+                        <p className="mt-1"><strong>设想的解决方案及优势：</strong> <span className="placeholder-text">[来自你输入的“2”]</span></p>
+                        <p className="placeholder-text mt-2">(表格内容说明对比分析)</p>
+                        {/* Placeholder for table */}
+                        <div className="overflow-x-auto mt-2">
+                            <table className="w-full text-sm text-left">
+                                <thead className="text-xs text-gray-300 uppercase bg-gray-700">
+                                    <tr>
+                                        <th scope="col" className="px-4 py-3">使用环节</th>
+                                        <th scope="col" className="px-4 py-3">当前方案 (阻力/不完美)</th>
+                                        <th scope="col" className="px-4 py-3">设想方案 (动力/更好)</th>
+                                        <th scope="col" className="px-4 py-3">潜在优势</th>
+                                        <th scope="col" className="px-4 py-3">潜在劣势</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="border-b border-gray-700">
+                                        <td className="px-4 py-3 placeholder-text">[任务分配]</td>
+                                        <td className="px-4 py-3 placeholder-text">[用户目前如何做？]</td>
+                                        <td className="px-4 py-3 placeholder-text">[用你的方案后如何做？]</td>
+                                        <td className="px-4 py-3 placeholder-text">[效率提升XX%]</td>
+                                        <td className="px-4 py-3 placeholder-text">[学习成本高]</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div className="guidance">
+                             <i className="fas fa-exchange-alt"></i>这里的核心是“替代”。你的方案必须比现有方案好上“数量级”，才能驱动用户改变。这里的“优势”和“劣势”目前都停留在你的设想层面，每一个判断都是一个“<span className="highlight-text font-semibold">待验证假设</span>”。用户真的觉得目前的“2”号方案有那么痛苦吗？你的新“2”号方案的优势真的能打动他们吗？
+                        </div>
+                    </MotionBox>
+                    
+                    {/* Module 3: Market & Opportunity */}
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>市</div>
+                        <h2 className="chinese-title">模块 3: 市场现状与机会识别</h2>
+                        <p className="english-subtitle">Module 3: Market & Opportunity</p>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-1">
+                        <h3 className="chinese-title text-xl">3.1 市场结构判断</h3>
+                        <p className="english-subtitle">Market Structure</p>
+                        <div className="mt-3 space-y-3">
+                            <div>
+                                <p className="font-semibold">市场阶段:</p>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="market_stage"/>初期 (探索者寥寥)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="market_stage" defaultChecked/>成长期 (竞争者涌现)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="market_stage"/>成熟期/红海</label>
+                                <p className="placeholder-text text-xs">[待验证假设：市场处于XX阶段]</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold">集中度:</p>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="concentration"/>高 (少数巨头垄断)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="concentration"/>中 (几家头部+若干中小)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="concentration" defaultChecked/>分散 (大量小玩家)</label>
+                                <p className="placeholder-text text-xs">[待验证假设：市场集中度为XX]</p>
+                            </div>
+                            <div>
+                                <p className="font-semibold">用户成熟度:</p>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="user_maturity"/>高 (用户非常了解)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="user_maturity" defaultChecked/>中 (用户有模糊认知)</label>
+                                <label className="checkbox-label text-sm"><input type="checkbox" name="user_maturity"/>低 (用户无概念)</label>
+                                 <p className="placeholder-text text-xs">[待验证假设：用户成熟度为XX]</p>
+                            </div>
+                        </div>
+                        <div className="guidance">
+                            <i className="fas fa-chart-pie"></i>对市场阶段、集中度和用户成熟度的判断，直接影响你的市场进入策略和推广方式。这些判断目前可能更多是基于你的直觉或初步调研，务必将其视为“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-3">
+                        <h3 className="chinese-title text-xl">3.2 竞品与参考竞品分析</h3>
+                        <p className="english-subtitle">Competitor Analysis</p>
+                        <p className="placeholder-text mt-2">(表格内容说明竞品分析)</p>
+                        {/* Placeholder for competitor table */}
+                        <div className="guidance">
+                            <i className="fas fa-chess-knight"></i>不要只盯着直接竞品，间接竞品往往揭示了用户的真实习惯和“够用就好”的心理。参考竞品则能帮助我们打开思路。
+                        </div>
+                    </MotionBox>
+                    
+                    <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">3.3 差异化假设与结构性机会</h3>
+                        <p className="english-subtitle">Differentiation & Opportunities</p>
+                        <p className="placeholder-text mt-2">(表格内容说明差异化)</p>
+                        <div className="guidance">
+                             <i className="fas fa-puzzle-piece"></i>差异化是寻找市场空位的第一步。“人无我有，人有我优”是理想状态。每一个“差异点”都是一个核心的“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">3.4 品牌心智定位假设</h3>
+                        <p className="english-subtitle">Brand Positioning</p>
+                        <p className="mt-2 font-semibold">核心定位：</p>
+                        <p className="placeholder-text">“当用户遇到 ______ 问题时，我们希望他第一个想到的是我们的产品。” [请填写这个词或短语]</p>
+                        <p className="mt-2 font-semibold">品牌感受：</p>
+                        <p className="placeholder-text">[请描述核心感受及传递方式，回顾0.2灵魂拷问]</p>
+                        <div className="guidance">
+                            <i className="fas fa-brain"></i>品牌定位是用户认知层面的竞争。清晰的定位能降低用户的选择成本，也为产品迭代指明方向。
+                        </div>
+                    </MotionBox>
+
+                    <MotionBox colSpan={1} className="md:col-span-3 lg:col-span-4">
+                        <h3 className="chinese-title text-xl">3.5 市场规模预估 (TAM/SAM/SOM)</h3>
+                        <p className="english-subtitle">Market Size Estimation</p>
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                            <div className="p-4 bg-gray-800 rounded-lg">
+                                <h4 class="font-semibold text-lg highlight-text">TAM <span class="text-xs text-gray-400">(Total Addressable Market)</span></h4>
+                                <p class="text-4xl font-bold mt-1">¥ <span class="placeholder-text">[估算]</span> 亿</p>
+                                <p class="placeholder-text text-xs mt-1">[数据来源或估算逻辑]</p>
+                                <div class="bar-chart-container mt-2">
+                                    <div class="bar w-1/3" data-height="100%" style={{height: '0%', backgroundColor: 'rgba(227,25,55,0.3)'}}></div>
+                                </div>
+                            </div>
+                            <div className="p-4 bg-gray-800 rounded-lg">
+                                <h4 class="font-semibold text-lg highlight-text">SAM <span class="text-xs text-gray-400">(Serviceable Addressable Market)</span></h4>
+                                <p class="text-4xl font-bold mt-1">¥ <span class="placeholder-text">[估算]</span> 亿</p>
+                                <p class="placeholder-text text-xs mt-1">[数据来源或估算逻辑]</p>
+                                 <div class="bar-chart-container mt-2">
+                                    <div class="bar w-1/3" data-height="70%" style={{height: '0%', backgroundColor: 'rgba(227,25,55,0.6)'}}></div>
+                                </div>
+                            </div>
+                            <div className="p-4 bg-gray-800 rounded-lg">
+                                <h4 class="font-semibold text-lg highlight-text">SOM <span class="text-xs text-gray-400">(Serviceable Obtainable Market)</span></h4>
+                                <p class="text-4xl font-bold mt-1">¥ <span class="placeholder-text">[估算]</span> 百万</p>
+                                <p class="placeholder-text text-xs mt-1">[数据来源或估算逻辑]</p>
+                                <div class="bar-chart-container mt-2">
+                                    <div class="bar w-1/3" data-height="30%" style={{height: '0%', backgroundColor: 'rgba(227,25,55,1)'}}></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className="guidance mt-4">
+                            <i className="fas fa-dollar-sign"></i>市场规模的估算帮助我们判断“天花板”在哪里。初期估算可以粗略，但逻辑要清晰。所有估算数字和背后的逻辑，都是“<span className="highlight-text font-semibold">待验证假设</span>”。
+                        </div>
+                    </MotionBox>
+
+                    {/* Module 4: Solution & Validation Points */}
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                         <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>解</div>
+                        <h2 className="chinese-title">模块 4: 方案结构与验证要点分析</h2>
+                        <p className="english-subtitle">Module 4: Solution & Validation Points</p>
+                        <p className="placeholder-text mt-2">现在，我们来拆解你的“设想的解决方案：2”，看看它由哪些核心部分组成，哪些是需要优先验证的假设。</p>
+                        {/* Placeholder for further content of Module 4 */}
+                    </MotionBox>
+                     <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">4.1 核心功能组成与必要性评估</h3>
+                        <p className="english-subtitle">Core Features & Necessity</p>
+                        <p className="placeholder-text mt-2">(表格内容说明核心功能)</p>
+                        <div className="guidance">
+                             <i className="fas fa-cogs"></i>功能不是越多越好，每个功能都应该服务于核心用户价值。哪些是“锦上添花”，哪些是“雪中送炭”？
+                        </div>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">4.2 用户行为路径拆解</h3>
+                        <p className="english-subtitle">User Journey Mapping</p>
+                        <p className="placeholder-text mt-2">(表格内容说明用户路径)</p>
+                         <div className="guidance">
+                             <i className="fas fa-shoe-prints"></i>清晰的行为路径有助于我们发现流程中的潜在断点和优化机会。“Aha Moment”是用户真正体验到产品核心价值的时刻。
+                        </div>
+                    </MotionBox>
+                     <MotionBox colSpan={1} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{fontSize: '6rem', opacity: 0.4}}>H?</div>
+                        <h3 className="chinese-title text-xl">4.3 核心方案假设清单</h3>
+                        <p className="english-subtitle">Key Assumptions List</p>
+                        <p className="placeholder-text mt-2">汇总你在“关键假设：3”中提到的内容，以及我们识别出的核心假设。 (表格内容)</p>
+                         <div className="guidance">
+                             <i className="fas fa-list-check"></i>这是我们后续工作的核心清单。识别出最关键、最不确定的假设，是降低风险的第一步。
+                        </div>
+                    </MotionBox>
+
+
+                    {/* Module 5: Risk & MVP Strategy */}
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>险</div>
+                        <h2 className="chinese-title">模块 5: 风险因素与验证设计</h2>
+                        <p className="english-subtitle">Module 5: Risk & MVP Strategy</p>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">5.1 核心假设验证任务总表</h3>
+                        <p className="english-subtitle">Assumption Validation Tasks</p>
+                        <p className="placeholder-text mt-2">(表格内容说明验证任务)</p>
+                        <div className="guidance">
+                             <i className="fas fa-vial"></i>验证的目的是学习和修正，而不是证明自己一定是对的。选择验证方式时，要遵循“快速、低成本、能获取真实反馈”的原则。
+                        </div>
+                    </MotionBox>
+                     <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">5.2 最可能失败点分析</h3>
+                        <p className="english-subtitle">The Killing Stone</p>
+                        <p className="placeholder-text mt-2">(表格内容说明失败点)</p>
+                        <div className="guidance">
+                            <i className="fas fa-skull-crossbones"></i>识别“一票否决”的风险点至关重要。对于这些点，我们要么尽早验证并找到解决方案，要么勇敢承认并及时止损。
+                        </div>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-3 lg:col-span-4">
+                        <h3 className="chinese-title text-xl">5.3 最小可行产品 (MVP) 验证路径策略</h3>
+                        <p className="english-subtitle">MVP Strategy</p>
+                        <ol className="list-decimal list-inside mt-3 space-y-2 text-gray-300">
+                            <li><i className="fas fa-comments mr-2 highlight-text"></i>直接测试 (无需产品)</li>
+                            <li><i className="fas fa-people-arrows mr-2 highlight-text"></i>人工服务 (模拟流程)</li>
+                            <li><i className="fas fa-tools mr-2 highlight-text"></i>借用工具 (表单/Notion等)</li>
+                            <li><i className="fas fa-magic mr-2 highlight-text"></i>人工替代系统功能 (“绿野仙踪”模式)</li>
+                            <li><i className="fas fa-rocket mr-2 highlight-text"></i>最小版本开发 (核心闭环功能)</li>
+                            <li><i className="fas fa-layer-group mr-2 highlight-text"></i>全量开发 (产品完整上线)</li>
+                        </ol>
+                        <div className="guidance">
+                            <i className="fas fa-route"></i>针对你当前最需要验证的假设，哪种或哪几种MVP策略组合最为合适？目标是用最小的成本，最快地获取关于核心假设的真实反馈。
+                        </div>
+                    </MotionBox>
+
+                    {/* Module 6: Strategic Judgment & Next Step */}
+                    <MotionBox colSpan={2} className="md:col-span-3 lg:col-span-4">
+                        <div className="big-number" style={{opacity: 0.2, fontSize:'10rem', right: '2rem'}}>策</div>
+                        <h2 className="chinese-title">模块 6: 战略判断与下一步</h2>
+                        <p className="english-subtitle">Module 6: Strategic Judgment & Next Step</p>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-1 lg:col-span-2">
+                        <h3 className="chinese-title text-xl">6.1 综合评估与核心结论</h3>
+                        <p className="english-subtitle">Overall Assessment</p>
+                        <p className="mt-2 font-semibold">目前项目最大的机会是什么？</p>
+                        <p className="placeholder-text">[总结机会点...]</p>
+                        <p className="mt-2 font-semibold">最致命的风险是什么？</p>
+                        <p className="placeholder-text">[总结风险点...]</p>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-2 lg:col-span-2 flex flex-col items-center justify-center highlight-bg-gradient">
+                        <h3 className="chinese-title text-3xl text-center">6.2 建议 (Go / No-Go)</h3>
+                        <p className="english-subtitle">Recommendation</p>
+                        <div className="mt-4 text-center">
+                            <i className="fas fa-check-circle text-6xl highlight-text"></i>
+                            <p className="text-2xl font-bold mt-2">谨慎验证 (Verify)</p>
+                            <p className="placeholder-text text-center mx-auto max-w-sm">建议暂停大规模投入，优先验证 [请在此处填写1-2个你认为最核心、最不确定的假设，例如：H001“用户对核心价值的付费意愿” 和 H002“通过XX渠道低成本获客的可行性”]</p>
+                        </div>
+                    </MotionBox>
+                    <MotionBox colSpan={1} className="md:col-span-3 lg:col-span-4">
+                        <h3 className="chinese-title text-xl">6.3 下一步行动计划 (未来两周)</h3>
+                        <p className="english-subtitle">Next Steps (Next 2 Weeks)</p>
+                        <ol className="list-decimal list-inside mt-3 space-y-3">
+                            <li>
+                                <strong className="highlight-text">明确并细化待验证的核心假设:</strong>
+                                <p className="placeholder-text ml-4">重新审视，最终确定优先级最高的1-2个假设，并将其描述得具体、可衡量、可验证。 [例如：完成H001假设的精确描述...]</p>
+                            </li>
+                            <li>
+                                <strong className="highlight-text">设计并执行最小化验证方案:</strong>
+                                <p className="placeholder-text ml-4">采用MVP策略，设计具体验证步骤、资源、时间和预期衡量指标。[例如：针对H001，制作简易产品介绍页，投放给潜在用户...]</p>
+                            </li>
+                            <li>
+                                <strong className="highlight-text">收集反馈并快速迭代认知:</strong>
+                                <p className="placeholder-text ml-4">严格记录数据和用户反馈，客观分析，用于修正认知。[例如：整理访谈记录和页面数据，调整产品价值主张...]</p>
+                            </li>
+                        </ol>
+                         <p className="mt-8 text-center text-xl font-semibold">创业者，今天的分析就到这里。请记住，所有的商业计划在接触真实市场之前都只是<span className="highlight-text">假设</span>。你的任务就是勇敢而智慧地去<span className="highlight-text">验证</span>它们。期待你的进展！</p>
+                    </MotionBox>
+
+                </div>
+            );
+        };
+
+        ReactDOM.render(<App />, document.getElementById('root'));
+    </script>
+</body>
+</html>
