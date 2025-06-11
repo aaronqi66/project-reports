@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>创业导师辅导 | Startup Mentorship</title>
+    <script src="https://cdn.tailwindcss.com/3.4.1"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/framer-motion/11.0.8/motion.umd.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            background-color: #000000;
+            color: #E0E0E0; /* Light gray for primary text */
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            scroll-behavior: smooth;
+        }
+        :root {
+            --highlight-red: #E31937;
+            --card-bg: #111111; /* Slightly lighter than pure black for cards */
+        }
+        .highlight-text {
+            color: var(--highlight-red);
+        }
+        .highlight-border {
+            border-color: var(--highlight-red);
+        }
+        .highlight-bg-subtle {
+            background: linear-gradient(135deg, rgba(227, 25, 55, 0.2) 0%, rgba(227, 25, 55, 0.05) 100%);
+        }
+        .highlight-border-gradient {
+            border-width: 2px;
+            border-style: solid;
+            border-image: linear-gradient(to bottom right, var(--highlight-red) 30%, rgba(227, 25, 55, 0.3) 100%) 1;
+        }
+
+        /* Bento Grid general styling */
+        .bento-grid {
+            display: grid;
+            gap: 1.5rem; /* 24px */
+            padding: 1.5rem;
+        }
+        .bento-card {
+            background-color: var(--card-bg);
+            border-radius: 1rem; /* 16px */
+            padding: 1.5rem; /* 24px */
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease-out;
+        }
+        .bento-card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Large visual element - example */
+        .giant-number {
+            font-size: 10rem; /* Adjust as needed */
+            line-height: 1;
+            font-weight: 900;
+            color: var(--highlight-red);
+            opacity: 0.1; /* Make it subtle background element */
+            position: absolute;
+            right: 1rem;
+            bottom: -1rem;
+            z-index: 0;
+            user-select: none;
+        }
+        .content-z {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Table styling */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        th, td {
+            border: 1px solid #333;
+            padding: 0.75rem;
+            text-align: left;
+            font-size: 0.875rem; /* text-sm */
+        }
+        th {
+            background-color: #222;
+            font-weight: bold;
+        }
+        td.highlight-cell {
+            color: var(--highlight-red);
+            font-weight: bold;
+        }
+        .待明确, .待验证假设 {
+            color: #FFA726; /* Amber for pending items */
+            font-style: italic;
+        }
+        .placeholder-1 {
+            color: var(--highlight-red);
+            font-weight: bold;
+            /* background-color: rgba(227, 25, 55, 0.1); */
+            /* padding: 2px 4px; */
+            /* border-radius: 3px; */
+            display: inline-block;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 py-8">
+
+        <header class="text-center py-12">
+            <motion.h1 class="text-5xl md:text-7xl font-extrabold mb-4">
+                创业<span class="highlight-text">启航</span>指南
+            </motion.h1>
+            <motion.p class="text-xl md:text-2xl text-gray-400">
+                Mentorship for Your Startup Journey
+            </motion.p>
+        </header>
+
+        <!-- Module 0: Vision & Soul Searching -->
+        <section id="module0" class="bento-grid grid-cols-1 md:grid-cols-2">
+            <motion.div
+                class="bento-card md:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
+            >
+                <div class="giant-number">0</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">0</span>：项目愿景与灵魂拷问</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 0: Vision & Soul Searching</p>
+                    <p class="text-gray-300 mb-4">在进入理性分析前，锚定项目的初心、使命与产品灵魂。为后续所有模块的价值判断提供“北极星”。</p>
+                    <div class="space-y-6">
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-semibold mb-2"><i class="fas fa-rocket highlight-text mr-2"></i>0.1 美好作品想象</h3>
+                            <p class="text-gray-300">你提到对美好作品的想象是：“<span class="placeholder-1">项目核心概念</span>”。</p>
+                            <p class="text-gray-400 mt-1 text-sm">Your vision for a "great product" is: "<span class="placeholder-1">Core Project Concept</span>".</p>
+                            <p class="mt-2 text-gray-300"><strong>引导思考：</strong> “<span class="placeholder-1">项目核心概念</span>”是一个非常简洁的表述。为了让我们更清晰地理解，请你展开描述一下：抛开所有资源、技术、市场等限制，你心目中这个产品的“完美形态”究竟是什么样的？它如何运作？它为用户、为行业，乃至为世界带来了哪些独特且积极的改变？</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-semibold mb-2"><i class="fas fa-microphone-alt highlight-text mr-2"></i>0.2 灵魂拷问</h3>
+                            <p class="text-gray-300">你希望用户推荐产品时的关键词是：“<span class="placeholder-1">核心价值点</span>”。</p>
+                            <p class="text-gray-400 mt-1 text-sm">The key referral word you hope users use is: "<span class="placeholder-1">Core Value Point</span>".</p>
+                            <p class="mt-2 text-gray-300"><strong>引导思考：</strong> 如果这个产品最终大获成功，当用户兴奋地向朋友推荐时，他们脱口而出的第一个词，你希望是代表了它的什么核心特质？这个关键词将直接影响用户对你产品的第一印象和心智定位。这个“<span class="placeholder-1">核心价值点</span>”背后，你最想传递给用户的核心价值是什么？</p>
+                        </div>
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-semibold mb-2"><i class="fas fa-users highlight-text mr-2"></i>0.3 团队动机</h3>
+                            <p class="text-gray-300">关于团队动机，你的回答是：“<span class="placeholder-1">团队驱动力</span>”。</p>
+                            <p class="text-gray-400 mt-1 text-sm">Your team's motivation is: "<span class="placeholder-1">Team Driving Force</span>".</p>
+                            <p class="mt-2 text-gray-300"><strong>引导思考：</strong> 为什么是“你们”这个团队来做这件事？你们拥有哪些别人不具备的独特洞察、经验、资源或技术优势？这件事如何深刻地反映了你们团队的核心价值观和长期追求？</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
+        <!-- Module 1: Starting Point & Key Factors -->
+        <section id="module1" class="bento-grid grid-cols-1 md:grid-cols-3 mt-8">
+            <motion.div
+                class="bento-card md:col-span-3 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.1, ease: "easeOut" }}
+            >
+                <div class="giant-number">1</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">1</span>：项目出发点与关键要素梳理</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 1: Starting Point & Key Factors</p>
+                    <p class="text-gray-300 mb-4">评估项目方向的合理性，识别关键角色、变量和潜在盲区。</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>检查点说明</th>
+                                    <th>用户输入</th>
+                                    <th>导师分析与提问</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>项目成败的关键因子？</strong> 是供给、需求，还是链接？当前哪个环节最薄弱？</td>
+                                    <td class="placeholder-1">关键要素</td>
+                                    <td>你认为关键因子是“<span class="placeholder-1">关键要素</span>”。这具体指的是什么？是供给不足，需求不明确，还是链接效率低下？当前你认为哪个环节是最大的瓶颈？ <strong class="待明确">(待明确)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>用户输入是否存在盲区？</strong> 是否遗漏了关键角色、或忽略了重要的边界条件？</td>
+                                    <td class="placeholder-1">考虑周全</td>
+                                    <td>你提到“<span class="placeholder-1">考虑周全</span>”可能指已考虑过盲区。请思考：在你的项目所涉及的整个价值链条中，除了直接使用者，是否还有其他关键角色？是否有哪些重要的外部环境因素被忽略了？ <strong class="待验证假设">(待验证假设)</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>用户是否需要重新定义？</strong> 使用者 ≠ 付费者？是否存在多边关系？</td>
+                                    <td class="placeholder-1">用户定义</td>
+                                    <td>你认为用户定义是“<span class="placeholder-1">用户定义</span>”。这是否意味着使用者和付费者是同一个人？或者，你的产品/服务是否存在多边用户关系？ <strong class="待验证假设">(待验证假设)</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
+        <!-- Module 2: User Persona & Urgency -->
+        <section id="module2" class="bento-grid grid-cols-1 md:grid-cols-2 mt-8">
+             <motion.div
+                class="bento-card md:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.2, ease: "easeOut" }}
+            >
+                <div class="giant-number">2</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">2</span>：用户角色与需求迫切度分析</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 2: User Persona & Urgency</p>
+                    <p class="text-gray-300 mb-4">明确目标用户、行为动因、使用场景与痛点强度。</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-6 mb-2"><i class="fas fa-user-friends highlight-text mr-2"></i>2.1 用户画像与链路角色</h3>
+                    <p class="text-gray-300 mb-4">你提供的目标用户是：“<span class="placeholder-1">目标用户群</span>”。</p>
+                     <p class="text-gray-400 mt-1 text-sm mb-4">Your target user is: "<span class="placeholder-1">Target User Group</span>".</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>用户角色</th>
+                                    <th>群体规模（来源）</th>
+                                    <th>角色身份</th>
+                                    <th>工作方式</th>
+                                    <th>获客渠道</th>
+                                    <th>情感动机</th>
+                                    <th>心理痛点</th>
+                                    <th>行为触发点</th>
+                                    <th>待验证假设</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="placeholder-1">目标用户群</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待验证假设">用户“<span class="placeholder-1">目标用户群</span>”是否是该产品最核心、最典型的用户？其群体规模是否足以支撑业务发展？</td>
+                                </tr>
+                                <tr>
+                                    <td><em>（示例）学生</em></td>
+                                    <td><em>数百万（教育局统计）</em></td>
+                                    <td><em>K12学生</em></td>
+                                    <td><em>在校学习，课后作业</em></td>
+                                    <td><em>学校推广，家长推荐</em></td>
+                                    <td><em>渴望高分，害怕落后</em></td>
+                                    <td><em>题目太难，无人辅导</em></td>
+                                    <td><em>考试临近，作业繁重</em></td>
+                                    <td class="待验证假设"><em>学生对提分有强烈诉求，且愿意为此付出努力。</em></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4 text-gray-300"><strong>引导思考：</strong> “<span class="placeholder-1">目标用户群</span>”这个目标用户群体具体是谁？请尽可能详细地描述他们的特征。他们通常在什么场景下会遇到问题？通过什么渠道可以接触到他们？</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-map-signs highlight-text mr-2"></i>2.2 场景设想还原</h3>
+                    <p class="text-gray-300 mb-4">你描述的使用场景是：“<span class="placeholder-1">核心使用场景</span>”。</p>
+                    <p class="text-gray-400 mt-1 text-sm mb-4">The usage scenario you described is: "<span class="placeholder-1">Core Usage Scenario</span>".</p>
+                    <p class="text-gray-300"><strong>引导思考：</strong> 请用第一人称（“我”作为用户）或小故事的形式，生动地还原用户在“<span class="placeholder-1">核心使用场景</span>”这个场景下的典型任务、行为路径和决策过程。</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-exchange-alt highlight-text mr-2"></i>2.3 用户当前解决方案与设想方案对比分析</h3>
+                     <p class="text-gray-300 mb-2">你提供的目前解决方案是“<span class="placeholder-1">现有方案</span>”，设想的解决方案是“<span class="placeholder-1">创新方案</span>”。</p>
+                    <p class="text-gray-400 mt-1 text-sm mb-4">Current solution: "<span class="placeholder-1">Existing Solution</span>", Proposed solution: "<span class="placeholder-1">Innovative Solution</span>".</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>使用环节</th>
+                                    <th>当前方案 (阻力)</th>
+                                    <th>设想方案 (动力)</th>
+                                    <th>潜在优势</th>
+                                    <th>潜在劣势</th>
+                                    <th>待验证假设</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>问题识别阶段</strong></td>
+                                    <td class="placeholder-1">现有方案</td>
+                                    <td class="placeholder-1">创新方案</td>
+                                    <td class="待明确">例如：更快发现问题？</td>
+                                    <td class="待明确">例如：用户认知门槛高？</td>
+                                    <td class="待验证假设">设想方案在问题识别环节的“动力”是否真实存在，并能有效克服当前方案的“阻力”？</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>信息搜集阶段</strong></td>
+                                    <td class="placeholder-1">现有方案</td>
+                                    <td class="placeholder-1">创新方案</td>
+                                    <td class="待明确">例如：信息更全面、精准？</td>
+                                    <td class="待明确">例如：信息过载，筛选困难？</td>
+                                    <td class="待验证假设">用户是否真的认为当前方案在信息搜集上存在巨大痛点，且设想方案能显著改善？</td>
+                                </tr>
+                                 <tr>
+                                    <td><strong>方案评估阶段</strong></td>
+                                    <td class="placeholder-1">现有方案</td>
+                                    <td class="placeholder-1">创新方案</td>
+                                    <td class="待明确">例如：评估标准更清晰、客观？</td>
+                                    <td class="待明确">例如：转换成本高？</td>
+                                    <td class="待验证假设">设想方案提供的评估优势是否足以让用户放弃现有习惯？</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>决策执行阶段</strong></td>
+                                    <td class="placeholder-1">现有方案</td>
+                                    <td class="placeholder-1">创新方案</td>
+                                    <td class="待明确">例如：操作更便捷、成本更低？</td>
+                                    <td class="待明确">例如：初期功能不完善？</td>
+                                    <td class="待验证假设">用户在决策执行时，设想方案的“动力”是否远大于“阻力”？</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>结果反馈阶段</strong></td>
+                                    <td class="placeholder-1">现有方案</td>
+                                    <td class="placeholder-1">创新方案</td>
+                                    <td class="待明确">例如：效果可衡量、反馈及时？</td>
+                                    <td class="待明确">例如：效果不达预期？</td>
+                                    <td class="待验证假设">设想方案提供的结果反馈机制是否能增强用户粘性？</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
+        <!-- Module 3: Market & Opportunity -->
+        <section id="module3" class="bento-grid grid-cols-1 md:grid-cols-3 mt-8">
+            <motion.div
+                class="bento-card md:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.1, ease: "easeOut" }}
+            >
+                <div class="giant-number">3</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">3</span>：市场现状与机会识别</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 3: Market & Opportunity</p>
+                    <p class="text-gray-300 mb-4">明确是否存在结构性空位、用户群缺口或需求真空。</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-6 mb-2"><i class="fas fa-chart-pie highlight-text mr-2"></i>3.1 市场结构判断</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>维度</th>
+                                    <th>当前状态</th>
+                                    <th>来源或假设说明</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>市场阶段</td>
+                                    <td class="待明确">初期 / 成长期 / 红海</td>
+                                    <td class="待验证假设">请判断你项目所处的市场发展阶段，是蓝海、早期成长，还是竞争激烈的红海？你的判断依据是什么？</td>
+                                </tr>
+                                <tr>
+                                    <td>集中度</td>
+                                    <td class="待明确">高 / 中 / 分散</td>
+                                    <td class="待验证假设">市场上主要的玩家有几家？市场份额是高度集中在少数巨头手中，还是比较分散？</td>
+                                </tr>
+                                <tr>
+                                    <td>用户成熟度</td>
+                                    <td class="待明确">高 / 中 / 低</td>
+                                    <td class="待验证假设">目标用户对这类产品/服务的认知和接受程度如何？是否需要投入大量成本进行市场教育？</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-balance-scale highlight-text mr-2"></i>3.2 竞品与参考竞品分析</h3>
+                    <p class="text-gray-300 mb-4"><strong>引导思考：</strong> 直接竞品、间接竞品、参考竞品分别是什么？<strong class="待明确">(请至少列出1-2个最值得分析的竞品，并说明理由)</strong></p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-lightbulb highlight-text mr-2"></i>3.3 差异化假设与结构性机会识别</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                             <thead>
+                                <tr>
+                                    <th>维度</th>
+                                    <th>当前主流做法</th>
+                                    <th>我们的路径 (基于用户设想方案"<span class="placeholder-1">创新方案</span>")</th>
+                                    <th>差异点</th>
+                                    <th>是否具备验证价值</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>核心用户价值</strong></td>
+                                    <td class="待明确">例如：提供通用功能</td>
+                                    <td class="待明确">例如：针对细分人群“<span class="placeholder-1">目标用户群</span>”，提供深度定制服务</td>
+                                    <td class="待明确">例如：从“广”到“专”</td>
+                                    <td class="待明确"><strong>是/否？</strong> 如何验证？</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>解决方案特点</strong></td>
+                                    <td class="待明确">例如：重功能堆砌</td>
+                                    <td class="待明确">例如：极简设计</td>
+                                    <td class="待明确">例如：从“繁”到“简”</td>
+                                    <td class="待明确"><strong>是/否？</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>获客/推广方式</strong></td>
+                                    <td class="待明确">例如：依赖广告</td>
+                                    <td class="待明确">例如：口碑传播</td>
+                                    <td class="待明确">例如：从“买量”到“自发”</td>
+                                    <td class="待明确"><strong>是/否？</strong></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>商业模式</strong></td>
+                                    <td class="待明确">例如：一次性售卖</td>
+                                    <td class="待明确">例如：按效果付费</td>
+                                    <td class="待明确">例如：从“固定”到“灵活”</td>
+                                    <td class="待明确"><strong>是/否？</strong></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                     <p class="mt-4 text-gray-300"><strong>引导思考：</strong> 你设想的解决方案“<span class="placeholder-1">创新方案</span>”与市场上已有的主流做法相比，最核心的差异点是什么？这个差异点是否可能构成一个结构性的机会？</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-bullseye highlight-text mr-2"></i>3.4 品牌心智定位假设</h3>
+                    <p class="text-gray-300 mb-2"><strong>核心定位：</strong> “当用户遇到 <u class="highlight-text decoration-dotted underline-offset-4待明确">______ (待明确)</u> 问题时，我们希望他第一个想到的是我们的产品。” (结合项目主题“<span class="placeholder-1">项目核心概念</span>”、目标用户“<span class="placeholder-1">目标用户群</span>”和设想方案“<span class="placeholder-1">创新方案</span>”)</p>
+                    <p class="text-gray-300"><strong>品牌感受：</strong> 你想通过产品设计和服务传递给用户的核心感受是什么？ <strong class="待明确">(待明确)</strong></p>
+                </div>
+            </motion.div>
+            <motion.div
+                class="bento-card md:col-span-1 flex flex-col items-center justify-center highlight-bg-subtle"
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.2, ease: "easeOut" }}
+            >
+                 <h3 class="text-xl lg:text-2xl font-semibold mb-4 text-center"><i class="fas fa-dollar-sign highlight-text mr-2"></i>3.5 市场规模预估</h3>
+                 <p class="text-sm text-gray-400 mb-4 text-center">Market Size Estimation (TAM/SAM/SOM)</p>
+                 <canvas id="marketSizeChart" class="max-w-xs mx-auto"></canvas>
+                 <div class="text-xs text-gray-500 mt-2 text-center">
+                     <p><span class="font-bold">TAM:</span> <span class="待明确">¥ ? 亿 (总体市场)</span></p>
+                     <p><span class="font-bold">SAM:</span> <span class="待明确">¥ ? 亿 (可服务市场)</span></p>
+                     <p><span class="font-bold">SOM:</span> <span class="待明确">¥ ? 百万 (可获取市场)</span></p>
+                 </div>
+                 <p class="mt-4 text-xs text-gray-400 text-center">数据来源均 <strong class="待明确">(待明确)</strong></p>
+            </motion.div>
+        </section>
+
+
+        <!-- Module 4: Solution & Validation Points -->
+        <section id="module4" class="bento-grid grid-cols-1 md:grid-cols-2 mt-8">
+            <motion.div
+                class="bento-card md:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.1, ease: "easeOut" }}
+            >
+                <div class="giant-number">4</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">4</span>：方案结构与验证要点分析</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 4: Solution & Validation Points</p>
+                    <p class="text-gray-300 mb-4">拆解产品路径与核心假设，构建待验证清单。</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-6 mb-2"><i class="fas fa-cogs highlight-text mr-2"></i>4.1 核心功能组成与必要性评估</h3>
+                    <p class="text-gray-300 mb-4">基于你设想的解决方案：“<span class="placeholder-1">创新方案</span>”</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>功能名称</th>
+                                    <th>主要目标</th>
+                                    <th>差异性</th>
+                                    <th>用户价值</th>
+                                    <th>待验证假设</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>功能 A</strong> <span class="待明确">(待明确)</span></td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待验证假设">用户是否真的需要功能A？价值是否足够？差异性是否构成核心竞争力？</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>功能 B</strong> <span class="待明确">(待明确)</span></td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待验证假设">同上</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>功能 C</strong> <span class="待明确">(待明确)</span></td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待明确">待明确</td>
+                                    <td class="待验证假设">同上</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <p class="mt-4 text-gray-300"><strong>引导思考：</strong> 将“<span class="placeholder-1">创新方案</span>”拆解成核心功能模块。哪些是“必备的”，哪些是“锦上添花的”？</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-route highlight-text mr-2"></i>4.2 用户行为路径拆解</h3>
+                    <p class="text-gray-300 mb-4">以用户使用你设想的解决方案“<span class="placeholder-1">创新方案</span>”为例：</p>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>路径阶段</th>
+                                    <th>设想路径 (用户具体操作步骤)</th>
+                                    <th>用户目标</th>
+                                    <th>关键激励点 (Aha Moment)</th>
+                                    <th>待验证点</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td><strong>发现/认知</strong></td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td><td class="待验证假设">用户能否通过设想渠道发现？第一印象？</td></tr>
+                                <tr><td><strong>体验/试用</strong></td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td><td class="待验证假设">能否快速感受核心价值？操作障碍？</td></tr>
+                                <tr><td><strong>转化/付费</strong></td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td><td class="待验证假设">是否愿为核心价值付费？门槛合理？</td></tr>
+                                <tr><td><strong>持续使用/留存</strong></td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td><td class="待验证假设">能否持续提供价值，形成习惯？</td></tr>
+                                <tr><td><strong>推荐/分享</strong></td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td><td class="待验证假设">是否愿主动推荐？驱动力？</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-clipboard-list highlight-text mr-2"></i>4.3 核心方案假设清单</h3>
+                    <div class="overflow-x-auto">
+                        <table class="text-xs">
+                            <thead>
+                                <tr>
+                                    <th>假设编号</th>
+                                    <th>假设内容</th>
+                                    <th>来源模块</th>
+                                    <th>优先级</th>
+                                    <th>推荐验证方式</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>H001</td><td>用户对“美好作品想象<span class="placeholder-1">项目核心概念</span>”中描述的价值有真实需求。</td><td>0.1</td><td class="highlight-cell">高</td><td>用户访谈</td></tr>
+                                <tr><td>H002</td><td>用户在推荐时会使用关键词“<span class="placeholder-1">核心价值点</span>”来概括产品核心价值。</td><td>0.2</td><td>中</td><td>概念测试</td></tr>
+                                <tr><td>H004</td><td>项目成败的关键因子是用户所指的“<span class="placeholder-1">关键要素</span>”，且当前该环节薄弱。</td><td>1</td><td class="highlight-cell">高</td><td>市场分析</td></tr>
+                                <tr><td>H005</td><td>目标用户群体“<span class="placeholder-1">目标用户群</span>”的画像、痛点、动机如初步设想一致。</td><td>2.1</td><td class="highlight-cell">高</td><td>用户画像调研</td></tr>
+                                <tr><td>H007</td><td>设想方案“<span class="placeholder-1">创新方案</span>”相比当前方案“<span class="placeholder-1">现有方案</span>”，在关键环节能提供显著优势并驱动用户转换。</td><td>2.3</td><td class="highlight-cell">高</td><td>MVP验证</td></tr>
+                                 <tr><td>H009</td><td>设想方案“<span class="placeholder-1">创新方案</span>”的核心差异化路径能有效吸引目标用户。</td><td>3.3</td><td class="highlight-cell">高</td><td>价值主张测试</td></tr>
+                                 <tr><td>H012</td><td>设想方案“<span class="placeholder-1">创新方案</span>”拆解出的核心功能A、B、C确实是用户需要的。</td><td>4.1</td><td class="highlight-cell">高</td><td>功能原型测试</td></tr>
+                                 <tr><td>H013</td><td>用户行为路径各阶段的转化符合预期，Aha Moment能有效激励用户。</td><td>4.2</td><td class="highlight-cell">高</td><td>用户行为数据分析</td></tr>
+                                 <tr><td class="待明确">...</td><td class="待明确">(请根据实际情况继续添加)</td><td class="待明确"></td><td class="待明确"></td><td class="待明确"></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
+        <!-- Module 5: Risk & MVP Strategy -->
+        <section id="module5" class="bento-grid grid-cols-1 md:grid-cols-3 mt-8">
+            <motion.div
+                class="bento-card md:col-span-2 relative overflow-hidden"
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.1, ease: "easeOut" }}
+            >
+                <div class="giant-number">5</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">5</span>：风险因素与验证设计</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 5: Risk & MVP Strategy</p>
+                    <p class="text-gray-300 mb-4">构建“假设—验证—失败点”的闭环验证体系。</p>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-6 mb-2"><i class="fas fa-tasks highlight-text mr-2"></i>5.1 核心假设验证任务总表</h3>
+                    <div class="overflow-x-auto">
+                        <table class="text-xs">
+                            <thead><tr><th>假设编号</th><th>假设内容</th><th>验证优先级</th><th>验证原因</th><th>推荐验证方式</th><th>验证周期/样本量</th></tr></thead>
+                            <tbody>
+                                <tr><td>H001</td><td>用户对“美好作品想象<span class="placeholder-1">项目核心概念</span>”...有真实需求。</td><td class="highlight-cell">高</td><td>若不成立，项目根基动摇。</td><td>深度用户访谈</td><td>1-2周 / 10-20人</td></tr>
+                                <tr><td>H005</td><td>目标用户群体“<span class="placeholder-1">目标用户群</span>”的画像...一致。</td><td class="highlight-cell">高</td><td>精准用户定位是前提。</td><td>用户画像工作坊</td><td>2-3周 / 50-100问卷</td></tr>
+                                <tr><td>H007</td><td>设想方案“<span class="placeholder-1">创新方案</span>”相比当前方案...显著优势。</td><td class="highlight-cell">高</td><td>验证产品核心竞争力。</td><td>简易原型/DEMO A/B测试</td><td>2-4周 / 20-30人</td></tr>
+                                 <tr><td>H009</td><td>设想方案“<span class="placeholder-1">创新方案</span>”的核心差异化...吸引目标用户。</td><td class="highlight-cell">高</td><td>验证差异化价值主张。</td><td>PPC测试、概念卡片</td><td>1-2周</td></tr>
+                                 <tr><td>H012</td><td>设想方案“<span class="placeholder-1">创新方案</span>”的核心功能...用户需要。</td><td class="highlight-cell">高</td><td>确保开发资源投入正确。</td><td>功能原型测试</td><td>1-2周 / 10-15人</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-skull-crossbones highlight-text mr-2"></i>5.2 最可能失败点分析 (The Killing Stone)</h3>
+                    <div class="overflow-x-auto">
+                        <table>
+                            <thead><tr><th>潜在失败点</th><th>表现形式</th><th>当前是否已验证</th><th>是否可拆解验证</th><th>喊停风险等级</th></tr></thead>
+                            <tbody>
+                                <tr><td><strong>1. 伪需求/需求不迫切</strong></td><td>用户访谈冷淡，MVP无人用</td><td class="待明确">否</td><td>是</td><td class="highlight-cell">极高</td></tr>
+                                <tr><td><strong>2. 解决方案无明显优势</strong></td><td>用户试用后流向竞品</td><td class="待明确">否</td><td>是</td><td class="highlight-cell">高</td></tr>
+                                <tr><td><strong>3. 目标用户定位错误</strong></td><td>推广后用户画像与预期不符</td><td class="待明确">否</td><td>是</td><td class="highlight-cell">高</td></tr>
+                                <tr><td><strong>4. 核心功能设计缺陷/体验差</strong></td><td>用户在关键路径受阻</td><td class="待明确">否</td><td>是</td><td>中</td></tr>
+                                <tr><td><strong>5. 无法建立有效获客渠道</strong></td><td>SOM难以达成，成本过高</td><td class="待明确">否</td><td>是</td><td>中</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </motion.div>
+            <motion.div
+                class="bento-card md:col-span-1 highlight-border-gradient flex flex-col justify-center"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.2, ease: "easeOut" }}
+            >
+                <h3 class="text-xl lg:text-2xl font-semibold mb-4 text-center"><i class="fas fa-rocket highlight-text mr-2"></i>5.3 MVP验证路径策略</h3>
+                 <p class="text-sm text-gray-400 mb-6 text-center">MVP Validation Path Strategy</p>
+                <ul class="space-y-3 text-gray-300 text-sm">
+                    <li><strong class="highlight-text">1. 直接测试 (无需产品):</strong> 演示文稿、问卷、落地页。</li>
+                    <li><strong class="highlight-text">2. 人工服务 (模拟流程):</strong> 手动提供核心服务。</li>
+                    <li><strong class="highlight-text">3. 借用工具:</strong> 表单/Notion/飞书等组合。</li>
+                    <li><strong class="highlight-text">4. 人工替代系统 (Wizard of Oz):</strong> 前台自动 + 后台人工。</li>
+                    <li><strong class="highlight-text">5. 最小版本开发:</strong> 仅1–2个核心功能。</li>
+                </ul>
+                <p class="mt-6 text-xs text-gray-400"><strong>引导思考：</strong> 基于项目模糊度，强烈建议从最轻量级的“直接测试”和“人工服务”开始。</p>
+            </motion.div>
+        </section>
+
+        <!-- Module 6: Strategic Judgment & Next Step -->
+        <section id="module6" class="bento-grid grid-cols-1 md:grid-cols-3 mt-8">
+            <motion.div
+                class="bento-card md:col-span-3 relative overflow-hidden"
+                initial={{ opacity: 0, y: 50 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay:0.1, ease: "easeOut" }}
+            >
+                <div class="giant-number">6</div>
+                <div class="content-z">
+                    <h2 class="text-3xl lg:text-5xl font-bold mb-2">模块 <span class="highlight-text">6</span>：战略判断与下一步</h2>
+                    <p class="text-lg text-gray-400 mb-6">Module 6: Strategic Judgment & Next Step</p>
+                    <p class="text-gray-300 mb-4">基于以上所有分析，给出明确的、负责任的战略建议。</p>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-xl lg:text-2xl font-semibold mb-2"><i class="fas fa-check-circle highlight-text mr-2"></i>6.1 综合评估与核心结论</h3>
+                            <p class="text-gray-300 mb-2"><strong>目前项目最大的机会是什么？</strong></p>
+                            <p class="text-gray-400 text-sm mb-3">由于信息概括（均为“<span class="placeholder-1">占位符</span>”），目前难以准确判断。潜在机会在于：如果项目主题“<span class="placeholder-1">项目核心概念</span>”确实指向了未被满足的真实需求，且设想方案“<span class="placeholder-1">创新方案</span>”能提供独特价值。 <strong class="待验证假设">(待验证假设)</strong></p>
+                            <p class="text-gray-300 mb-2"><strong>最致命的风险是什么？</strong></p>
+                            <ul class="list-disc list-inside text-gray-400 text-sm space-y-1">
+                                <li>信息极度缺乏导致的核心假设未经检验。</li>
+                                <li>伪需求或需求不明确。</li>
+                                <li>解决方案缺乏竞争力。</li>
+                            </ul>
+                        </div>
+                        <div class="highlight-bg-subtle p-6 rounded-lg">
+                             <h3 class="text-xl lg:text-2xl font-semibold mb-2"><i class="fas fa-traffic-light highlight-text mr-2"></i>6.2 建议 (Go / No-Go)</h3>
+                             <div class="flex items-center space-x-3 mb-3">
+                                <span class="text-5xl highlight-text"><i class="fas fa-pause-circle"></i></span>
+                                <p class="text-2xl font-bold">谨慎验证 (Verify)</p>
+                             </div>
+                             <p class="text-gray-300 mb-2">建议暂停任何大规模投入（尤其是产品开发），优先投入极少量资源，聚焦于验证最核心的1-2个假设。</p>
+                             <p class="text-gray-400 text-sm"><strong>理由：</strong> 项目信息模糊度极高，核心假设完全没有得到任何初步验证。盲目投入风险巨大。</p>
+                        </div>
+                    </div>
+
+                    <h3 class="text-xl lg:text-2xl font-semibold mt-8 mb-2"><i class="fas fa-shoe-prints highlight-text mr-2"></i>6.3 下一步行动计划 (未来两周)</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-sm">
+                        <div class="p-4 border border-gray-700 rounded-lg hover:border-[var(--highlight-red)] transition-colors">
+                            <p class="font-bold text-lg mb-1"><span class="highlight-text">1.</span> 明确并细化核心要素</p>
+                            <p class="text-gray-400 mb-1">Action: 重新梳理并详细填写分析框架。</p>
+                            <p class="text-gray-300">Goal: 得到完整具体的项目构想文档。</p>
+                            <p class="text-xs text-gray-500 mt-1"><i class="fas fa-clock mr-1"></i>1-2天</p>
+                        </div>
+                        <div class="p-4 border border-gray-700 rounded-lg hover:border-[var(--highlight-red)] transition-colors">
+                            <p class="font-bold text-lg mb-1"><span class="highlight-text">2.</span> 设计并执行初步用户调研</p>
+                            <p class="text-gray-400 mb-1">Action: 针对细化用户设计访谈提纲/问卷，接触5-10位用户。</p>
+                            <p class="text-gray-300">Goal: 初步验证用户画像、痛点真实性。</p>
+                            <p class="text-xs text-gray-500 mt-1"><i class="fas fa-clock mr-1"></i>3-5天</p>
+                        </div>
+                        <div class="p-4 border border-gray-700 rounded-lg hover:border-[var(--highlight-red)] transition-colors">
+                            <p class="font-bold text-lg mb-1"><span class="highlight-text">3.</span> 梳理并迭代核心假设</p>
+                            <p class="text-gray-400 mb-1">Action: 根据用户调研反馈，更新核心假设清单。</p>
+                            <p class="text-gray-300">Goal: 形成更聚焦的待验证假设列表。</p>
+                            <p class="text-xs text-gray-500 mt-1"><i class="fas fa-clock mr-1"></i>1-2天</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </section>
+
+        <footer class="text-center py-12 mt-12 border-t border-gray-800">
+            <p class="text-gray-500">创业维艰，砥砺前行。Good luck with your venture!</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Framer Motion setup for components if not using React
+        // For simple div animations, the HTML attributes are usually enough.
+        // This script block is more for complex interactions or dynamic content.
+
+        // Chart.js for Market Size
+        const ctxMarketSize = document.getElementById('marketSizeChart');
+        if (ctxMarketSize) {
+            new Chart(ctxMarketSize, {
+                type: 'bar',
+                data: {
+                    labels: ['TAM', 'SAM', 'SOM'],
+                    datasets: [{
+                        label: '市场规模估值 (Market Size Estimation)',
+                        data: [100, 60, 15], // Placeholder data, replace with actual or待明确
+                        backgroundColor: [
+                            'rgba(227, 25, 55, 0.2)', // TAM - Red with opacity
+                            'rgba(227, 25, 55, 0.5)', // SAM
+                            'rgba(227, 25, 55, 0.8)'  // SOM
+                        ],
+                        borderColor: [
+                            '#E31937',
+                            '#E31937',
+                            '#E31937'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            ticks: { color: '#9CA3AF' }, // text-gray-400
+                            grid: { color: '#374151' } // border-gray-700
+                        },
+                        x: {
+                            ticks: { color: '#9CA3AF' },
+                            grid: { display: false }
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: false, // Hide legend or customize
+                            labels: {
+                                color: '#E0E0E0' // text-gray-200
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: '#1F2937', // bg-gray-800
+                            titleColor: '#E0E0E0',
+                            bodyColor: '#D1D5DB', // text-gray-300
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.dataset.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed.y !== null) {
+                                        // You can add units here, e.g. ' 亿' or ' 百万'
+                                        // For now, just value
+                                        label += context.parsed.y;
+                                        if (context.label === 'TAM' || context.label === 'SAM') label += ' 亿';
+                                        if (context.label === 'SOM') label += ' 百万';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Initialize Framer Motion for non-React usage
+        // This is typically handled by attributes, but if you need to manually control:
+        const motionElements = document.querySelectorAll('[initial]');
+        motionElements.forEach(el => {
+            // This is a conceptual example. Direct JS control of Framer Motion outside React
+            // often involves using the motion() function directly if you were building elements dynamically.
+            // For declarative HTML, the attributes are the primary way.
+            // console.log("Framer Motion element found:", el);
+        });
+
+    </script>
+</body>
+</html>
